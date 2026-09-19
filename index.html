@@ -16,22 +16,64 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ===== Premium Header Logo ===== */
+        .header-logo-wrap {
+            width: 76px;
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .header-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            transform: scale(1.45);
+            transform-origin: center;
+        }
+
+        @media (max-width: 640px) {
+            .header-logo-wrap {
+                width: 62px;
+                height: 62px;
+            }
+
+            .header-logo {
+                transform: scale(1.38);
+            }
+        }
     </style>
 </head>
 <body class="text-stone-900 min-h-screen flex flex-col selection:bg-amber-800 selection:text-white">
 
     <!-- Header -->
     <header class="bg-white border-b border-stone-200/85 sticky top-0 z-50 backdrop-blur-md bg-opacity-95 shadow-sm">
-        <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center gap-2">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4 flex justify-between items-center gap-3">
             
             <!-- Logo & Brand Name -->
-            <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 bg-stone-900 rounded-xl p-1 shadow-sm flex items-center justify-center border border-amber-800/30 flex-shrink-0">
-                    <img src="logo-01.png" alt="Al-Gharbawy" class="w-full h-full object-contain" onerror="this.src='https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=100&q=80'">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="header-logo-wrap flex-shrink-0">
+                    <img
+                        src="logo-01.png"
+                        alt="Al-Gharbawy"
+                        class="header-logo"
+                        onerror="this.onerror=null; this.src='logo-01.png';"
+                    >
                 </div>
-                <div>
-                    <h1 id="brandTitle" class="text-xs font-black tracking-wider text-stone-900 uppercase">الغرباوي</h1>
-                    <p id="brandSub" class="text-[9px] text-stone-400">القائمة الرقمية</p>
+
+                <div class="min-w-0">
+                    <h1 id="brandTitle" class="text-sm sm:text-base font-black tracking-wide text-stone-900 uppercase leading-tight">
+                        الغرباوي
+                    </h1>
+                    <p id="brandSub" class="text-[10px] sm:text-[11px] text-stone-400 mt-0.5">
+                        القائمة الرقمية
+                    </p>
                 </div>
             </div>
             
