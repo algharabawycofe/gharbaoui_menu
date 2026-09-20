@@ -61,6 +61,101 @@
             padding-bottom: env(safe-area-inset-bottom);
         }
 
+
+
+        html.dark .waiter-overlay {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        html.dark .waiter-toolbar {
+            background: color-mix(in srgb, var(--bg-surface) 96%, transparent);
+            border-bottom-color: var(--border);
+        }
+        html.dark .waiter-close-btn {
+            background: var(--bg-subtle);
+            border-color: var(--border);
+            color: var(--text-primary);
+        }
+        html.dark .waiter-brand,
+        html.dark .waiter-item-name,
+        html.dark .waiter-item-price,
+        html.dark .waiter-time {
+            color: var(--text-primary);
+        }
+        html.dark .waiter-subtitle,
+        html.dark .waiter-order-title,
+        html.dark .waiter-item-details,
+        html.dark .waiter-footer {
+            color: var(--text-secondary);
+        }
+        html.dark .waiter-item {
+            border-bottom-color: var(--border-strong);
+        }
+        html.dark .waiter-item-qty {
+            color: var(--coffee-gold);
+            background: var(--bg-subtle);
+            border-color: var(--border);
+        }
+        html.dark .waiter-item-notes {
+            color: var(--coffee-gold);
+            background: color-mix(in srgb, var(--coffee-gold) 10%, var(--bg-surface));
+            border-inline-start-color: var(--coffee-gold);
+        }
+        html.dark .waiter-footer {
+            border-top-color: var(--border-strong);
+        }
+
+        /* ═══════ DARK MODE VISIBILITY FIX ═══════ */
+        html.dark input,
+        html.dark textarea,
+        html.dark select {
+            color: var(--text-primary);
+            background-color: var(--bg-surface);
+            border-color: var(--border);
+            color-scheme: dark;
+        }
+        html.dark input::placeholder,
+        html.dark textarea::placeholder {
+            color: var(--text-muted);
+            opacity: 1;
+        }
+        html.dark option {
+            color: var(--text-primary);
+            background: var(--bg-surface);
+        }
+        html.dark .form-input:focus,
+        html.dark .search-input:focus,
+        html.dark .notes-input:focus {
+            color: var(--text-primary);
+            background-color: var(--bg-surface);
+            border-color: var(--coffee-gold);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--coffee-gold) 18%, transparent);
+        }
+        html.dark .menu-card,
+        html.dark .skeleton-card,
+        html.dark .admin-panel,
+        html.dark .pill-btn,
+        html.dark .qty-btn,
+        html.dark .secondary-btn {
+            color: var(--text-primary);
+        }
+        html.dark .menu-card,
+        html.dark .admin-panel,
+        html.dark .pill-btn,
+        html.dark .qty-btn,
+        html.dark .secondary-btn {
+            background-color: var(--bg-surface);
+            border-color: var(--border);
+        }
+        html.dark .bottom-nav {
+            background: color-mix(in srgb, var(--bg-surface) 97%, transparent);
+            border-top-color: var(--border);
+        }
+        html.dark .sheet-footer {
+            background: var(--bg-surface);
+            border-top-color: var(--border);
+        }
+
         @media (max-width: 768px) { body { padding-bottom: 90px; } }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -95,6 +190,29 @@
         }
         .icon-btn:hover { background: var(--coffee-gold); color: #FFFFFF; border-color: var(--coffee-gold); transform: translateY(-1px); }
         .icon-btn:active { transform: scale(0.94); }
+
+        /* Dark-mode close buttons: keep the X visible on dark surfaces */
+        .close-action-btn {
+            color: var(--text-primary) !important;
+            background: var(--bg-subtle) !important;
+            border: 1px solid var(--border) !important;
+            box-shadow: var(--shadow-sm);
+        }
+        .close-action-btn:hover {
+            color: #FFFFFF !important;
+            background: var(--coffee-gold) !important;
+            border-color: var(--coffee-gold) !important;
+        }
+        html.dark .close-action-btn {
+            color: #FAF6F0 !important;
+            background: #3A2A20 !important;
+            border-color: #4A3628 !important;
+        }
+        html.dark .close-action-btn:hover {
+            color: #1F1611 !important;
+            background: #D4A56A !important;
+            border-color: #D4A56A !important;
+        }
 
         .cart-btn-header {
             background: linear-gradient(135deg, var(--coffee-dark), var(--coffee-medium));
@@ -846,31 +964,6 @@
             text-transform: uppercase;
             margin-top: 4px;
         }
-        .waiter-table-box {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #C89B5E, #E0BE85);
-            border-radius: 20px;
-            margin: 20px 0;
-            box-shadow: 0 12px 32px rgba(200, 155, 94, 0.35);
-            color: #1F1611;
-        }
-        .waiter-table-label {
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.7;
-        }
-        .waiter-table-num {
-            font-size: 72px;
-            font-weight: 900;
-            line-height: 1;
-            color: #1F1611;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
         .waiter-order-title {
             font-size: 22px;
             font-weight: 900;
@@ -988,7 +1081,6 @@
         .waiter-thanks { margin-top: 24px; font-size: 16px; font-weight: 800; color: #C89B5E; }
 
         @media (max-width: 640px) {
-            .waiter-table-num { font-size: 56px; }
             .waiter-item-name { font-size: 20px; }
             .waiter-item-details { font-size: 14px; }
             .waiter-item-qty { font-size: 24px; padding: 4px 12px; }
@@ -1158,7 +1250,7 @@
         <div class="sheet-handle"></div>
         <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
             <h2 id="cartModalTitle" style="font-size: 15px; font-weight: 900; color: var(--text-primary); margin: 0;">📋 طلباتي الحالية</h2>
-            <button onclick="closeCartModal()" class="icon-btn" style="width: 32px; height: 32px; font-size: 12px;">✕</button>
+            <button onclick="closeCartModal()" class="icon-btn close-action-btn" style="width: 32px; height: 32px; font-size: 12px;">✕</button>
         </div>
         <div class="sheet-scroll" style="padding: 16px 20px;">
             <div id="cartItemsContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
@@ -1171,7 +1263,7 @@
         <div class="sheet-handle"></div>
         <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
             <h2 style="font-size: 14px; font-weight: 900; color: var(--text-primary); margin: 0;">✏️ تعديل عنصر القائمة</h2>
-            <button onclick="closeEditModal()" class="icon-btn" style="width: 32px; height: 32px; font-size: 12px;">✕</button>
+            <button onclick="closeEditModal()" class="icon-btn close-action-btn" style="width: 32px; height: 32px; font-size: 12px;">✕</button>
         </div>
         <div class="sheet-scroll" style="padding: 16px 20px;">
             <form id="editItemForm" onsubmit="updateItem(event)" style="display: grid; grid-template-columns: 1fr; gap: 12px;">
@@ -1268,7 +1360,6 @@
         let currentLang = localStorage.getItem('gharbaoui_lang') || 'ar';
         let favorites = JSON.parse(localStorage.getItem('gharbaoui_favorites')) || [];
         let cart = JSON.parse(localStorage.getItem('gharbaoui_cart')) || [];
-        let tableNumber = localStorage.getItem('gharbaoui_table') || '';
         let showOnlyFavorites = false;
         let currentSlide = 0;
         let activeCategory = 'All';
@@ -1752,13 +1843,6 @@
             }).join('');
 
             footer.innerHTML = `
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 20px;">🪑</span>
-                    <input type="text" id="tableNumberInput" class="form-input" 
-                           placeholder="${currentLang === 'en' ? 'Table Number' : 'رقم الطاولة'}" 
-                           value="${tableNumber}" maxlength="6" style="text-align: center; font-weight: 900; letter-spacing: 2px; font-size: 14px;"
-                           oninput="saveTableNumber(this.value)">
-                </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 12px; font-weight: 800; color: var(--text-secondary);">
                         ${currentLang === 'en' ? 'Total:' : 'الإجمالي:'}
@@ -1774,11 +1858,6 @@
                     </button>
                 </div>
             `;
-        }
-
-        function saveTableNumber(value) {
-            tableNumber = value.replace(/[^0-9]/g, '');
-            localStorage.setItem('gharbaoui_table', tableNumber);
         }
 
         function showOrderToWaiter() {
@@ -1812,19 +1891,12 @@
                 `;
             }).join('');
 
-            const tableBoxHtml = tableNumber ? `
-                <div class="waiter-table-box">
-                    <div class="waiter-table-label">${currentLang === 'en' ? 'TABLE' : 'طاولة'}</div>
-                    <div class="waiter-table-num">${tableNumber}</div>
-                </div>
-            ` : '';
 
             $('waiterContent').innerHTML = `
                 <div class="waiter-header">
                     <span class="waiter-logo">☕</span>
                     <h1 class="waiter-brand">${currentLang === 'en' ? 'Al-Gharbawy' : 'الغرباوي'}</h1>
                     <div class="waiter-subtitle">${currentLang === 'en' ? 'Order Ticket' : 'تذكرة الطلب'}</div>
-                    ${tableBoxHtml}
                 </div>
                 <div class="waiter-order-title">📋 ${currentLang === 'en' ? 'Order Details' : 'تفاصيل الطلب'}</div>
                 <div class="waiter-items">${itemsHtml}</div>
@@ -2060,7 +2132,7 @@
             $('itemSheetContent').innerHTML = `
                 <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-subtle);">
                     <img src="${item.image}" style="width: 100%; height: 100%; object-fit: cover;">
-                    <button onclick="closeItemSheet()" class="icon-btn" style="position: absolute; top: 12px; inset-inline-end: 12px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);">✕</button>
+                    <button onclick="closeItemSheet()" class="icon-btn close-action-btn" style="position: absolute; top: 12px; inset-inline-end: 12px; backdrop-filter: blur(8px);">✕</button>
                     <button onclick="toggleFavorite(${item.id}); renderItemSheet();" class="icon-btn" style="position: absolute; top: 12px; inset-inline-start: 12px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); font-size: 18px;">${isFav ? '❤️' : '🤍'}</button>
                     ${!inStock ? `<div style="position: absolute; bottom: 12px; inset-inline-start: 12px; background: var(--accent-danger); color: #fff; font-size: 11px; font-weight: 900; padding: 6px 12px; border-radius: 8px;">${currentLang === 'en' ? 'Out of Stock' : 'غير متوفر'}</div>` : ''}
                 </div>
