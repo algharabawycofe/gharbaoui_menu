@@ -1058,11 +1058,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ═══════ SPLASH LOGO — معدّل ═══════ */
+        /* ═══════ SPLASH LOGO — محسّن ═══════ */
         .splash-logo-wrap {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1074,37 +1074,55 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* هالة ذهبية ناعمة حول اللوجو */
+        /* الحلقة الذهبية الخارجية */
         .splash-logo-wrap::before {
             content: '';
             position: absolute;
-            inset: -30px;
+            inset: -15px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(200, 155, 94, 0.55), rgba(200, 155, 94, 0.15) 50%, transparent 75%);
+            background: radial-gradient(circle, rgba(200, 155, 94, 0.6), rgba(200, 155, 94, 0.2) 60%, transparent 80%);
             animation: logoGlow 3s ease-in-out infinite;
-            filter: blur(20px);
+            filter: blur(15px);
+            z-index: 0;
         }
         @keyframes logoGlow {
             0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.15); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
 
-        /* اللوجو - بدون خلفية، بدون قص، بحجم كامل */
+        /* الدائرة البيضاء/الكريمي اللي ورا اللوجو */
+        .splash-logo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FAF6F0, #F5EEE5);
+            box-shadow: 
+                0 20px 60px rgba(200, 155, 94, 0.5),
+                0 8px 24px rgba(0, 0, 0, 0.3),
+                inset 0 -4px 12px rgba(200, 155, 94, 0.15);
+            z-index: 1;
+        }
+
+        /* اللوجو نفسه */
         .splash-logo-wrap img {
-            width: 100%;
-            height: 100%;
+            width: 85%;
+            height: 85%;
             object-fit: contain;
             object-position: center;
             position: relative;
             z-index: 2;
-            filter: drop-shadow(0 12px 32px rgba(200, 155, 94, 0.5))
-                    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+            filter: 
+                drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))
+                contrast(1.1) 
+                saturate(1.1);
         }
 
         .splash-logo-emoji {
-            font-size: 120px;
+            font-size: 100px;
             line-height: 1;
-            filter: drop-shadow(0 8px 24px rgba(200, 155, 94, 0.6));
+            position: relative;
+            z-index: 2;
             animation: logoFloat 4s ease-in-out infinite;
         }
 
@@ -1164,25 +1182,32 @@
             animation: fadeInUp 0.8s 0.8s backwards;
         }
 
+        /* ═══════ SPLASH ENTER BUTTON — محسّن بدون صاروخ ═══════ */
         .splash-enter-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 16px 40px;
-            background: linear-gradient(135deg, #C89B5E, #E0BE85, #C89B5E);
+            padding: 18px 48px;
+            background: linear-gradient(135deg, #C89B5E 0%, #E0BE85 50%, #C89B5E 100%);
             background-size: 200% auto;
             color: #1F1611;
             border: none;
-            border-radius: 18px;
-            font-size: 15px;
+            border-radius: 20px;
+            font-size: 16px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             cursor: pointer;
             font-family: inherit;
-            box-shadow: 0 12px 32px rgba(200, 155, 94, 0.4);
+            box-shadow: 
+                0 15px 40px rgba(200, 155, 94, 0.45),
+                0 4px 12px rgba(0, 0, 0, 0.2),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: fadeInUp 0.8s 1s backwards, btnShine 3s linear infinite 1.5s;
+            animation: 
+                fadeInUp 0.8s 1s backwards, 
+                btnShine 3s linear infinite 1.5s,
+                btnPulse 2s ease-in-out infinite 2s;
             position: relative;
             overflow: hidden;
             margin-top: 20px;
@@ -1191,6 +1216,20 @@
             0% { background-position: 0% center; }
             100% { background-position: 200% center; }
         }
+        @keyframes btnPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 15px 40px rgba(200, 155, 94, 0.45),
+                    0 4px 12px rgba(0, 0, 0, 0.2),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 20px 50px rgba(200, 155, 94, 0.7),
+                    0 4px 12px rgba(0, 0, 0, 0.2),
+                    inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+            }
+        }
         .splash-enter-btn::after {
             content: '';
             position: absolute;
@@ -1198,15 +1237,18 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
             transition: left 0.6s ease;
         }
         .splash-enter-btn:hover::after {
             left: 100%;
         }
         .splash-enter-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 18px 40px rgba(200, 155, 94, 0.55);
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 
+                0 25px 60px rgba(200, 155, 94, 0.7),
+                0 6px 16px rgba(0, 0, 0, 0.25),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.1);
         }
         .splash-enter-btn:active {
             transform: translateY(-1px) scale(0.98);
@@ -1249,10 +1291,10 @@
         @media (max-width: 640px) {
             .splash-brand { font-size: 34px; }
             .splash-brand-ar { font-size: 44px; }
-            .splash-logo-wrap { width: 160px; height: 160px; }
-            .splash-logo-emoji { font-size: 90px; }
+            .splash-logo-wrap { width: 140px; height: 140px; }
+            .splash-logo-emoji { font-size: 80px; }
             .splash-welcome { font-size: 16px; }
-            .splash-enter-btn { padding: 14px 32px; font-size: 14px; }
+            .splash-enter-btn { padding: 16px 36px; font-size: 15px; }
         }
     </style>
 </head>
@@ -1281,7 +1323,6 @@
             <p class="splash-welcome-sub" id="splashWelcomeSub">اتفضل اختار طلبك من القائمة واستمتع بأحلى قهوة ☕</p>
 
             <button onclick="enterMenu()" class="splash-enter-btn">
-                <span>🚀</span>
                 <span id="splashEnterText">دخول القائمة</span>
             </button>
 
@@ -2420,317 +2461,4 @@
                 footer.style.display = 'flex';
                 footer.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; flex-direction: column;">
-                            <span style="font-size: 10px; color: var(--text-muted); font-weight: 700;">${currentLang === 'en' ? 'Total' : 'الإجمالي'}</span>
-                            <span style="font-size: 18px; font-weight: 900; color: var(--coffee-gold);">${totalPrice} ${currency}</span>
-                        </div>
-                        <button class="primary-btn" style="padding: 12px 20px;" onclick="confirmAddToCart()">
-                            <span>🛒</span> <span>${currentLang === 'en' ? 'Add to Order' : 'إضافة للطلب'}</span>
-                        </button>
-                    </div>
-                `;
-            } else {
-                footer.style.display = 'none';
-            }
-        }
-
-        function changeSheetQty(delta) {
-            currentSheetQty = Math.max(1, currentSheetQty + delta);
-            renderItemSheet();
-        }
-
-        function confirmAddToCart() {
-            if (!currentSheetItem) return;
-            const notes = ($('sheetNotes')?.value || '').trim();
-            addToCart(currentSheetItem, notes, currentSheetQty);
-            closeItemSheet();
-            showToast(currentLang === 'en' ? 'Added to order' : 'تمت الإضافة للطلب', '🛒');
-        }
-
-        const FEATURED_IDS = [8, 12, 18, 22, 26, 27, 28, 38, 48, 52, 64, 67];
-        const SLIDE_DURATION = 6000;
-
-        function initFeaturedCarousel() {
-            const available = menuItems.filter(i => i.inStock !== false);
-            let picked = available.filter(i => FEATURED_IDS.includes(i.id));
-            if (picked.length < 5) {
-                const extras = available.filter(i => !FEATURED_IDS.includes(i.id));
-                picked = [...picked, ...extras].slice(0, 10);
-            }
-            featuredItems = picked.slice(0, 12);
-            if (featuredItems.length === 0) {
-                $('featuredSection').classList.add('hidden-init');
-                return;
-            }
-            $('featuredSection').classList.remove('hidden-init');
-            renderSlides();
-            renderDots();
-            bindCarouselEvents();
-            showSlide(0);
-            startAutoplay();
-        }
-
-        function renderSlides() {
-            $('slidesContainer').innerHTML = featuredItems.map((item, i) => {
-                const kbClass = i % 2 === 0 ? 'kenburns' : 'kenburns-rev';
-                return `
-                    <div class="carousel-slide ${kbClass}" data-slide="${i}" onclick="openItemDetails(${item.id})">
-                        <img src="${item.image}" alt="${item.nameEn}" loading="${i === 0 ? 'eager' : 'lazy'}">
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderDots() {
-            $('slideDots').innerHTML = featuredItems.map((_, i) => `
-                <button type="button" class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="event.stopPropagation(); goToSlide(${i})"></button>
-            `).join('');
-        }
-
-        function showSlide(index) {
-            if (featuredItems.length === 0) return;
-            currentSlide = (index + featuredItems.length) % featuredItems.length;
-            document.querySelectorAll('.carousel-slide').forEach((el, i) => {
-                el.classList.remove('active');
-                if (i === currentSlide) {
-                    const img = el.querySelector('img');
-                    if (img) { img.style.animation = 'none'; void img.offsetWidth; img.style.animation = ''; }
-                    el.classList.add('active');
-                }
-            });
-            document.querySelectorAll('.carousel-dot').forEach((el, i) => {
-                el.classList.toggle('active', i === currentSlide);
-            });
-            const item = featuredItems[currentSlide];
-            const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
-            const itemDesc = currentLang === 'en' ? item.descEn : item.descAr;
-            const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
-            const featuredLabel = currentLang === 'en' ? '⭐ Featured' : '⭐ الأكثر تميزاً';
-            const detailsLabel = currentLang === 'en' ? 'View' : 'التفاصيل';
-            const currency = currentLang === 'en' ? 'EGP' : 'جنيه';
-
-            const content = $('slideContent');
-            content.innerHTML = `
-                <div class="anim-item" style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;">
-                    <span class="featured-badge">${featuredLabel}</span>
-                    <span style="font-size: 10px; font-weight: 800; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 6px; color: #fff; border: 1px solid rgba(255,255,255,0.2);">${catReadable}</span>
-                </div>
-                <h2 class="anim-item" style="font-size: 26px; font-weight: 900; text-shadow: 0 4px 12px rgba(0,0,0,0.4); line-height: 1.1; margin: 0 0 4px; color: #fff;">${itemName}</h2>
-                <p class="anim-item line-clamp-2" style="font-size: 12px; color: rgba(255,255,255,0.8); max-width: 460px; margin: 0 0 12px;">${itemDesc}</p>
-                <div class="anim-item" style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                    <span style="font-size: 24px; font-weight: 900; color: var(--coffee-gold-light); text-shadow: 0 2px 8px rgba(0,0,0,0.4);">${item.price} <span style="font-size: 12px; font-weight: 700;">${currency}</span></span>
-                    <button type="button" onclick="event.stopPropagation(); openItemDetails(${item.id})" 
-                            style="background: rgba(255,255,255,0.95); color: #1F1611; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 900; border: none; cursor: pointer;">
-                        ${detailsLabel}
-                    </button>
-                </div>
-            `;
-            content.classList.remove('is-active');
-            void content.offsetWidth;
-            content.classList.add('is-active');
-            resetProgressBar();
-        }
-
-        function resetProgressBar() {
-            const bar = $('slideProgress');
-            bar.classList.remove('running');
-            bar.style.width = '0%';
-            void bar.offsetWidth;
-            bar.classList.add('running');
-        }
-
-        function nextSlide() { showSlide(currentSlide + 1); restartAutoplay(); }
-        function prevSlide() { showSlide(currentSlide - 1); restartAutoplay(); }
-        function goToSlide(i) { showSlide(i); restartAutoplay(); }
-
-        function startAutoplay() {
-            stopAutoplay();
-            autoplayTimer = setInterval(() => {
-                if (!isCarouselPaused) showSlide(currentSlide + 1);
-            }, SLIDE_DURATION);
-        }
-        function stopAutoplay() { if (autoplayTimer) clearInterval(autoplayTimer); autoplayTimer = null; }
-        function restartAutoplay() { startAutoplay(); }
-
-        function bindCarouselEvents() {
-            const carousel = $('featuredCarousel');
-            carousel.addEventListener('mouseenter', () => { isCarouselPaused = true; });
-            carousel.addEventListener('mouseleave', () => { isCarouselPaused = false; });
-            carousel.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-                isCarouselPaused = true;
-            }, { passive: true });
-            carousel.addEventListener('touchend', (e) => {
-                const diff = touchStartX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 50) { if (diff > 0) nextSlide(); else prevSlide(); }
-                isCarouselPaused = false;
-            }, { passive: true });
-            document.addEventListener('visibilitychange', () => { isCarouselPaused = document.hidden; });
-            document.addEventListener('keydown', (e) => {
-                const anyOpen = $('itemSheet').classList.contains('open') || 
-                                $('cartSheet').classList.contains('open') || 
-                                $('editSheet').classList.contains('open') ||
-                                $('waiterOverlay').classList.contains('open');
-                if (!anyOpen) {
-                    if (e.key === 'ArrowLeft') nextSlide();
-                    if (e.key === 'ArrowRight') prevSlide();
-                } else if (e.key === 'Escape') {
-                    if ($('waiterOverlay').classList.contains('open')) closeWaiterView();
-                    else if ($('itemSheet').classList.contains('open')) closeItemSheet();
-                    else if ($('cartSheet').classList.contains('open')) closeCartModal();
-                    else if ($('editSheet').classList.contains('open')) closeEditModal();
-                }
-            });
-        }
-
-        function renderSkeleton() {
-            $('customerMenuGrid').innerHTML = Array.from({ length: 6 }).map(() => `
-                <div class="skeleton-card">
-                    <div class="skeleton-block" style="width: 88px; height: 88px; border-radius: 16px;"></div>
-                    <div style="flex: 1;">
-                        <div class="skeleton-block" style="width: 60px; height: 14px; margin-bottom: 8px;"></div>
-                        <div class="skeleton-block" style="width: 80%; height: 16px; margin-bottom: 6px;"></div>
-                        <div class="skeleton-block" style="width: 60%; height: 12px; margin-bottom: 10px;"></div>
-                        <div class="skeleton-block" style="width: 90px; height: 24px;"></div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderCustomerMenu() {
-            const tabsContainer = $('categoryTabs');
-            tabsContainer.innerHTML = categoriesList.map(cat => {
-                const catLabel = categoryNames[cat] ? categoryNames[cat][currentLang] : cat;
-                const isActive = activeCategory === cat && !showOnlyFavorites;
-                return `
-                    <button onclick="filterCategory('${cat}')" class="cat-tab ${isActive ? 'active' : ''}">
-                        ${catLabel}
-                    </button>
-                `;
-            }).join('');
-            filterMenu();
-        }
-
-        function filterCategory(cat) {
-            showOnlyFavorites = false;
-            $('favFilterBtn').classList.remove('active');
-            document.querySelector('[data-nav="fav"]').classList.remove('active');
-            activeCategory = cat;
-            renderCustomerMenu();
-        }
-
-        const filterMenu = debounce(function() {
-            const searchVal = ($('searchInput').value || '').toLowerCase().trim();
-            const gridContainer = $('customerMenuGrid');
-
-            let filtered = menuItems.filter(item => {
-                const matchesCategory = showOnlyFavorites 
-                    ? favorites.includes(item.id) 
-                    : (activeCategory === 'All' || item.category === activeCategory);
-                const nameMatch = (item.nameAr && item.nameAr.toLowerCase().includes(searchVal)) || 
-                                  (item.nameEn && item.nameEn.toLowerCase().includes(searchVal));
-                const descMatch = (item.descAr && item.descAr.toLowerCase().includes(searchVal)) || 
-                                  (item.descEn && item.descEn.toLowerCase().includes(searchVal));
-                return matchesCategory && (nameMatch || descMatch);
-            });
-
-            if (filtered.length === 0) {
-                let emoji = '🔍';
-                let title = currentLang === 'en' ? 'No items found' : 'مفيش نتائج';
-                let sub = currentLang === 'en' ? 'Try another search term' : 'جرب كلمة تانية';
-                if (showOnlyFavorites) {
-                    emoji = '💔';
-                    title = currentLang === 'en' ? 'No favorites yet' : 'لسه مضفتش للمفضلة';
-                    sub = currentLang === 'en' ? 'Tap the heart on any item' : 'اضغط على القلب في أي منتج';
-                }
-                gridContainer.innerHTML = `
-                    <div class="empty-state">
-                        <span class="empty-state-icon">${emoji}</span>
-                        <div style="font-size: 15px; font-weight: 900; color: var(--text-secondary); margin-bottom: 6px;">${title}</div>
-                        <div style="font-size: 12px;">${sub}</div>
-                    </div>
-                `;
-                return;
-            }
-
-            gridContainer.innerHTML = filtered.map((item, idx) => {
-                const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
-                const itemDesc = currentLang === 'en' ? item.descEn : item.descAr;
-                const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
-                const isFav = favorites.includes(item.id);
-                const inStock = item.inStock !== false;
-                const isInCart = cart.some(c => c.id === item.id);
-                const currency = currentLang === 'en' ? 'EGP' : 'جنيه';
-
-                let adminActions = '';
-                if (isAdminMode) {
-                    const stockBtnText = inStock ? '🟢' : '🔴';
-                    const stockBtnClass = inStock ? 'background: var(--accent-success); color: white;' : 'background: var(--accent-danger); color: white;';
-                    adminActions = `
-                        <div class="admin-actions">
-                            <button onclick="toggleStock(${item.id}, event)" class="mini-btn stock" style="${stockBtnClass}" title="Stock">${stockBtnText}</button>
-                            <button onclick="openEditModal(${item.id}, event)" class="mini-btn edit" title="Edit">✏️</button>
-                            <button onclick="deleteItem(${item.id}, event)" class="mini-btn del" title="Delete">🗑️</button>
-                        </div>
-                    `;
-                }
-
-                const stockBadge = inStock ? '' : `<span class="stock-badge">${currentLang === 'en' ? 'OUT' : 'نفد'}</span>`;
-                let actionButton = '';
-                if (!inStock) {
-                    actionButton = `<span style="font-size: 10px; font-weight: 900; color: var(--accent-danger); background: color-mix(in srgb, var(--accent-danger) 12%, transparent); padding: 5px 10px; border-radius: 8px;">${currentLang === 'en' ? 'Unavailable' : 'غير متوفر'}</span>`;
-                } else if (isInCart) {
-                    actionButton = `<button onclick="toggleCartItemSimple(${item.id}, event)" class="add-btn remove">
-                        <span>✕</span><span>${currentLang === 'en' ? 'Remove' : 'حذف'}</span>
-                    </button>`;
-                } else {
-                    actionButton = `<button onclick="toggleCartItemSimple(${item.id}, event)" class="add-btn primary">
-                        <span>+</span><span>${currentLang === 'en' ? 'Add' : 'إضافة'}</span>
-                    </button>`;
-                }
-
-                return `
-                    <div class="menu-card ${inStock ? '' : 'out-of-stock'}" data-idx="${idx}" onclick="openItemDetails(${item.id})">
-                        ${stockBadge}
-                        <div class="menu-card-img-wrap">
-                            <img src="${item.image}" class="menu-card-img" loading="lazy" onerror="this.style.display='none';">
-                        </div>
-                        <div class="menu-card-body">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 4px;">
-                                <span class="cat-chip">${catReadable}</span>
-                                <button onclick="toggleFavorite(${item.id}, event)" class="fav-btn">${isFav ? '❤️' : '🤍'}</button>
-                            </div>
-                            <h3 style="font-size: 13px; font-weight: 900; color: var(--text-primary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${itemName}</h3>
-                            <p style="font-size: 11px; color: var(--text-muted); margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${itemDesc}</p>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; gap: 8px;">
-                                <span style="font-size: 14px; font-weight: 900; color: var(--coffee-gold);">${item.price} <span style="font-size: 10px; font-weight: 700;">${currency}</span></span>
-                                ${actionButton}
-                            </div>
-                        </div>
-                        ${adminActions}
-                    </div>
-                `;
-            }).join('');
-
-            requestAnimationFrame(() => {
-                document.querySelectorAll('.menu-card').forEach((card, i) => {
-                    setTimeout(() => card.classList.add('visible'), Math.min(i * 30, 600));
-                });
-            });
-        });
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector('[data-nav="home"]').classList.add('active');
-        }
-
-        function focusSearch() {
-            $('searchInput').focus();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector('[data-nav="search"]').classList.add('active');
-        }
-    </script>
-</body>
-</html>
+                        <div
