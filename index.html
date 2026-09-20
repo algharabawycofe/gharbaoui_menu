@@ -846,31 +846,6 @@
             text-transform: uppercase;
             margin-top: 4px;
         }
-        .waiter-table-box {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #C89B5E, #E0BE85);
-            border-radius: 20px;
-            margin: 20px 0;
-            box-shadow: 0 12px 32px rgba(200, 155, 94, 0.35);
-            color: #1F1611;
-        }
-        .waiter-table-label {
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.7;
-        }
-        .waiter-table-num {
-            font-size: 72px;
-            font-weight: 900;
-            line-height: 1;
-            color: #1F1611;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
         .waiter-order-title {
             font-size: 22px;
             font-weight: 900;
@@ -896,12 +871,6 @@
             color: #1F1611;
             line-height: 1.25;
             margin-bottom: 6px;
-        }
-        .waiter-item-details {
-            font-size: 16px;
-            font-weight: 700;
-            color: #6F4E37;
-            line-height: 1.5;
         }
         .waiter-item-notes {
             font-size: 15px;
@@ -988,9 +957,7 @@
         .waiter-thanks { margin-top: 24px; font-size: 16px; font-weight: 800; color: #C89B5E; }
 
         @media (max-width: 640px) {
-            .waiter-table-num { font-size: 56px; }
             .waiter-item-name { font-size: 20px; }
-            .waiter-item-details { font-size: 14px; }
             .waiter-item-qty { font-size: 24px; padding: 4px 12px; }
             .waiter-item-price { font-size: 18px; }
             .waiter-total-value { font-size: 36px; }
@@ -998,12 +965,334 @@
             .waiter-content { padding: 16px; }
             .waiter-total-box { padding: 20px; }
         }
+
+        /* ═══════ WELCOME SPLASH SCREEN ═══════ */
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: linear-gradient(135deg, #1A1310 0%, #2B1D14 40%, #3D2A1C 70%, #1A1310 100%);
+            background-size: 300% 300%;
+            animation: splashBgShift 15s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .splash-screen.hidden-splash {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        @keyframes splashBgShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .splash-beans {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .splash-bean {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.08;
+            animation: beanFloat 20s linear infinite;
+            filter: blur(0.5px);
+        }
+        @keyframes beanFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.08; }
+            90% { opacity: 0.08; }
+            100% {
+                transform: translateY(-100vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .splash-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+        .splash-glow.g1 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(200, 155, 94, 0.4), transparent 70%);
+            top: -150px; left: -100px;
+        }
+        .splash-glow.g2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(184, 101, 29, 0.3), transparent 70%);
+            bottom: -200px; right: -150px;
+            animation-delay: 3s;
+        }
+        @keyframes glowPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 0.9; }
+        }
+
+        .splash-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 30px 24px;
+            max-width: 480px;
+            width: 100%;
+            animation: splashContentIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes splashContentIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══════ SPLASH LOGO — معدّل ═══════ */
+        .splash-logo-wrap {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* هالة ذهبية ناعمة حول اللوجو */
+        .splash-logo-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(200, 155, 94, 0.55), rgba(200, 155, 94, 0.15) 50%, transparent 75%);
+            animation: logoGlow 3s ease-in-out infinite;
+            filter: blur(20px);
+        }
+        @keyframes logoGlow {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        /* اللوجو - بدون خلفية، بدون قص، بحجم كامل */
+        .splash-logo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 12px 32px rgba(200, 155, 94, 0.5))
+                    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+        }
+
+        .splash-logo-emoji {
+            font-size: 120px;
+            line-height: 1;
+            filter: drop-shadow(0 8px 24px rgba(200, 155, 94, 0.6));
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        .splash-brand {
+            font-size: 42px;
+            font-weight: 900;
+            color: #FAF6F0;
+            letter-spacing: 3px;
+            margin: 0 0 4px;
+            font-family: 'Cairo', sans-serif;
+            text-shadow: 0 4px 20px rgba(200, 155, 94, 0.5);
+            animation: fadeInUp 0.8s 0.3s backwards;
+        }
+        .splash-brand-ar {
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #C89B5E, #E0BE85, #C89B5E);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin: 0 0 8px;
+            font-family: 'Cairo', sans-serif;
+            animation: fadeInUp 0.8s 0.4s backwards, shimmerText 3s linear infinite;
+        }
+        @keyframes shimmerText {
+            to { background-position: 200% center; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .splash-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #C89B5E, transparent);
+            margin: 16px auto;
+            border-radius: 2px;
+            animation: fadeInUp 0.8s 0.5s backwards;
+        }
+
+        .splash-welcome {
+            font-size: 18px;
+            font-weight: 800;
+            color: #E0BE85;
+            margin: 0 0 8px;
+            animation: fadeInUp 0.8s 0.7s backwards;
+        }
+
+        .splash-welcome-sub {
+            font-size: 13px;
+            color: rgba(250, 246, 240, 0.6);
+            line-height: 1.6;
+            margin: 0 0 32px;
+            animation: fadeInUp 0.8s 0.8s backwards;
+        }
+
+        .splash-enter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #C89B5E, #E0BE85, #C89B5E);
+            background-size: 200% auto;
+            color: #1F1611;
+            border: none;
+            border-radius: 18px;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 12px 32px rgba(200, 155, 94, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.8s 1s backwards, btnShine 3s linear infinite 1.5s;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        @keyframes btnShine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .splash-enter-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        .splash-enter-btn:hover::after {
+            left: 100%;
+        }
+        .splash-enter-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 18px 40px rgba(200, 155, 94, 0.55);
+        }
+        .splash-enter-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .splash-lang {
+            position: absolute;
+            top: 20px;
+            inset-inline-end: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: rgba(250, 246, 240, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(200, 155, 94, 0.3);
+            color: #FAF6F0;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .splash-lang:hover {
+            background: rgba(200, 155, 94, 0.3);
+            border-color: #C89B5E;
+            transform: scale(1.08);
+        }
+
+        .splash-hint {
+            font-size: 11px;
+            color: rgba(250, 246, 240, 0.4);
+            margin-top: 24px;
+            animation: fadeInUp 0.8s 1.2s backwards;
+        }
+
+        @media (max-width: 640px) {
+            .splash-brand { font-size: 34px; }
+            .splash-brand-ar { font-size: 44px; }
+            .splash-logo-wrap { width: 160px; height: 160px; }
+            .splash-logo-emoji { font-size: 90px; }
+            .splash-welcome { font-size: 16px; }
+            .splash-enter-btn { padding: 14px 32px; font-size: 14px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- ═══════════ SPLASH SCREEN ═══════════ -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-glow g1"></div>
+        <div class="splash-glow g2"></div>
+
+        <div class="splash-beans" id="splashBeans"></div>
+
+        <button onclick="toggleLanguageFromSplash()" class="splash-lang" id="splashLangBtn">AR</button>
+
+        <div class="splash-content">
+            <div class="splash-logo-wrap">
+                <img src="logo-01.png" alt="Al-Gharbawy" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'splash-logo-emoji\'>☕</div>';">
+            </div>
+
+            <h1 class="splash-brand-ar" id="splashBrandAr">الغرباوي</h1>
+            <h2 class="splash-brand" id="splashBrand" style="font-size: 16px; letter-spacing: 4px; opacity: 0.6;">AL-GHARBAWY</h2>
+
+            <div class="splash-divider"></div>
+
+            <p class="splash-welcome" id="splashWelcome">✨ أهلاً وسهلاً بيك ✨</p>
+            <p class="splash-welcome-sub" id="splashWelcomeSub">اتفضل اختار طلبك من القائمة واستمتع بأحلى قهوة ☕</p>
+
+            <button onclick="enterMenu()" class="splash-enter-btn">
+                <span>🚀</span>
+                <span id="splashEnterText">دخول القائمة</span>
+            </button>
+
+            <p class="splash-hint" id="splashHint">☕ الغرباوي — تجربة قهوة استثنائية</p>
+        </div>
+    </div>
+
+    <!-- TOAST -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- HEADER -->
     <header class="app-header">
         <div style="max-width: 860px; margin: 0 auto; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
@@ -1036,6 +1325,7 @@
         </div>
     </header>
 
+    <!-- MAIN -->
     <main class="app-main">
         
         <div id="adminPanelSection" class="admin-panel hidden-init" style="margin-bottom: 20px;">
@@ -1268,7 +1558,6 @@
         let currentLang = localStorage.getItem('gharbaoui_lang') || 'ar';
         let favorites = JSON.parse(localStorage.getItem('gharbaoui_favorites')) || [];
         let cart = JSON.parse(localStorage.getItem('gharbaoui_cart')) || [];
-        let tableNumber = localStorage.getItem('gharbaoui_table') || '';
         let showOnlyFavorites = false;
         let currentSlide = 0;
         let activeCategory = 'All';
@@ -1282,82 +1571,83 @@
 
         const STORAGE_KEY = 'gharbaoui_menu_local_images_v15';
         const DARK_KEY = 'gharbaoui_dark_mode';
+        const SPLASH_KEY = 'gharbaoui_splash_shown';
 
         let defaultMenuItems = [
-            { id: 1, nameAr: "Espresso. s", nameEn: "Espresso. s", category: "Hot Coffee", price: 60, image: "images/hot-coffee/01.jpg", descAr: "جرعة إسبريسو مركزة غنية.", descEn: "Rich concentrated espresso shot.", inStock: true },
-            { id: 2, nameAr: "Espresso. D", nameEn: "Espresso. D", category: "Hot Coffee", price: 80, image: "images/hot-coffee/02.jpg", descAr: "جرعة إسبريسو مضاعفة.", descEn: "Double shot of espresso.", inStock: true },
-            { id: 3, nameAr: "Turkish Coffee", nameEn: "Turkish Coffee", category: "Hot Coffee", price: 50, image: "images/hot-coffee/03.jpg", descAr: "قهوة تركي أصلية على الوجه مضبوطة.", descEn: "Traditional authentic Turkish coffee.", inStock: true },
-            { id: 4, nameAr: "French Coffee", nameEn: "French Coffee", category: "Hot Coffee", price: 99, image: "images/hot-coffee/04.jpg", descAr: "قهوة فرنسية بالحليب ناعمة.", descEn: "Smooth French coffee with milk.", inStock: true },
-            { id: 5, nameAr: "Macchiato", nameEn: "Macchiato", category: "Hot Coffee", price: 80, image: "images/hot-coffee/05.jpg", descAr: "إسبريسو مع لمسة رغوة حليب خفيفة.", descEn: "Espresso with a dollop of foam.", inStock: true },
-            { id: 6, nameAr: "Cappuccino", nameEn: "Cappuccino", category: "Hot Coffee", price: 110, image: "images/hot-coffee/06.jpg", descAr: "إسبريسو وحليب مبخر ورغوة كثيفة.", descEn: "Espresso, steamed milk, and thick foam.", inStock: true },
-            { id: 7, nameAr: "Latte", nameEn: "Latte", category: "Hot Coffee", price: 120, image: "images/hot-coffee/07.jpg", descAr: "إسبريسو ناعم مع حليب دافئ.", descEn: "Smooth espresso with steamed milk.", inStock: true },
-            { id: 8, nameAr: "Spanish Latte", nameEn: "Spanish Latte", category: "Hot Coffee", price: 140, image: "images/hot-coffee/08.jpg", descAr: "لاتيه مع حليب مكثف محلى.", descEn: "Latte with sweetened condensed milk.", inStock: true },
-            { id: 9, nameAr: "Mocha", nameEn: "Mocha", category: "Hot Coffee", price: 150, image: "images/hot-coffee/09.jpg", descAr: "مزيج الإسبريسو الفاخر مع الشوكولاتة.", descEn: "Espresso mixed with chocolate and milk.", inStock: true },
-            { id: 10, nameAr: "Flat White", nameEn: "Flat White", category: "Hot Coffee", price: 90, image: "images/hot-coffee/10.jpg", descAr: "إسبريسو قوي مع طبقة حليب رقيقة.", descEn: "Strong espresso with microfoam milk.", inStock: true },
-            { id: 11, nameAr: "Cortado", nameEn: "Cortado", category: "Hot Coffee", price: 85, image: "images/hot-coffee/11.jpg", descAr: "مقادير متساوية من الإسبريسو والحليب.", descEn: "Equal parts espresso and steamed milk.", inStock: true },
-            { id: 12, nameAr: "Caramel Macchiato", nameEn: "Caramel Macchiato", category: "Hot Coffee", price: 150, image: "images/hot-coffee/12.jpg", descAr: "إسبريسو وحليب مع صوص الكراميل.", descEn: "Espresso, milk, and sweet caramel drizzle.", inStock: true },
-            { id: 13, nameAr: "Salt Caramel latte", nameEn: "Salt Caramel latte", category: "Hot Coffee", price: 150, image: "images/hot-coffee/13.jpg", descAr: "لاتيه بصوص الكراميل المملح.", descEn: "Latte with salted caramel flavor.", inStock: true },
-            { id: 14, nameAr: "French press", nameEn: "French press", category: "Hot Coffee", price: 130, image: "images/hot-coffee/14.jpg", descAr: "قهوة فرنس بريس غنية.", descEn: "Rich brewed French press coffee.", inStock: true },
-            { id: 15, nameAr: "ice latte", nameEn: "ice latte", category: "Iced Coffee", price: 120, image: "images/ice-coffee/15.jpg", descAr: "إسبريسو مثلج مع حليب بارد.", descEn: "Chilled espresso with cold milk over ice.", inStock: true },
-            { id: 16, nameAr: "ice mocha", nameEn: "ice mocha", category: "Iced Coffee", price: 130, image: "images/ice-coffee/16.jpg", descAr: "موكا مثلجة مع الشوكولاتة والثلج.", descEn: "Iced mocha with chocolate and ice.", inStock: true },
-            { id: 17, nameAr: "ice white mocha", nameEn: "ice white mocha", category: "Iced Coffee", price: 130, image: "images/ice-coffee/17.jpg", descAr: "شوكولاتة بيضاء مثلجة مع الإسبريسو.", descEn: "Chilled white chocolate mocha.", inStock: true },
-            { id: 18, nameAr: "ice Spanish latte", nameEn: "ice Spanish latte", category: "Iced Coffee", price: 160, image: "images/ice-coffee/18.jpg", descAr: "سبانش لاتيه مثلج غني.", descEn: "Sweet iced Spanish latte.", inStock: true },
-            { id: 19, nameAr: "ice caramel latte", nameEn: "ice caramel latte", category: "Iced Coffee", price: 140, image: "images/ice-coffee/19.jpg", descAr: "لاتيه مثلج مع نكهة الكراميل.", descEn: "Iced latte infused with caramel.", inStock: true },
-            { id: 20, nameAr: "ice salted caramel", nameEn: "ice salted caramel", category: "Iced Coffee", price: 130, image: "images/ice-coffee/20.jpg", descAr: "كراميل مملح مثلج ومنعش.", descEn: "Refreshing iced salted caramel.", inStock: true },
-            { id: 21, nameAr: "ice caramel Macchiato", nameEn: "ice caramel Macchiato", category: "Iced Coffee", price: 140, image: "images/ice-coffee/21.jpg", descAr: "ماكياتو كراميل مثلج وطبقات.", descEn: "Layered iced caramel macchiato.", inStock: true },
-            { id: 22, nameAr: "Frappe Caramel", nameEn: "Frappe Caramel", category: "Iced Frappe", price: 150, image: "images/ice-frappe/22.jpg", descAr: "فرابتيه مثلج ومخفوق بالكراميل.", descEn: "Blended ice caramel frappe.", inStock: true },
-            { id: 23, nameAr: "Frappe salted caramel", nameEn: "Frappe salted caramel", category: "Iced Frappe", price: 150, image: "images/ice-frappe/23.jpg", descAr: "فرابتيه كراميل مملح غني.", descEn: "Salted caramel blended frappe.", inStock: true },
-            { id: 24, nameAr: "Frappe mocha", nameEn: "Frappe mocha", category: "Iced Frappe", price: 160, image: "images/ice-frappe/24.jpg", descAr: "فرابتيه موكا شوكولاتة مثلج.", descEn: "Chocolate mocha blended frappe.", inStock: true },
-            { id: 25, nameAr: "Frappe Vanilla", nameEn: "Frappe Vanilla", category: "Iced Frappe", price: 150, image: "images/ice-frappe/25.jpg", descAr: "فرابتيه فانيليا ناعم ومثلج.", descEn: "Smooth vanilla blended frappe.", inStock: true },
-            { id: 26, nameAr: "Frappe Pistachio", nameEn: "Frappe Pistachio", category: "Iced Frappe", price: 170, image: "images/ice-frappe/26.jpg", descAr: "فرابتيه فستق فاخر ومميز.", descEn: "Premium pistachio blended frappe.", inStock: true },
-            { id: 27, nameAr: "Hot Matcha", nameEn: "Hot Matcha", category: "Specialty Coffee", price: 140, image: "images/matcha/27.jpg", descAr: "ماتشا يابانية ساخنة ودافئة.", descEn: "Warm traditional Japanese matcha.", inStock: true },
-            { id: 28, nameAr: "Ice Matcha", nameEn: "Ice Matcha", category: "Specialty Coffee", price: 140, image: "images/matcha/28.jpg", descAr: "ماتشا مثلجة ومنعشة.", descEn: "Chilled refreshing iced matcha.", inStock: true },
-            { id: 29, nameAr: "Matcha Blueberry", nameEn: "Matcha Blueberry", category: "Specialty Coffee", price: 160, image: "images/matcha/29.jpg", descAr: "ماتشا مع نكهة التوت الأزرق.", descEn: "Matcha infused with blueberry flavor.", inStock: true },
-            { id: 30, nameAr: "Sweet Matcha Cloud", nameEn: "Sweet Matcha Cloud", category: "Specialty Coffee", price: 180, image: "images/matcha/30.jpg", descAr: "ماتشا مع رغوة غنية.", descEn: "Matcha topped with sweet cloud foam.", inStock: true },
-            { id: 31, nameAr: "Matcha Vanilla Pistachio", nameEn: "Matcha Vanilla Pistachio", category: "Specialty Coffee", price: 160, image: "images/matcha/31.jpg", descAr: "مزيج ماتشا وفانيليا وفستق.", descEn: "Matcha with vanilla and pistachio notes.", inStock: true },
-            { id: 32, nameAr: "Matcha Coconut", nameEn: "Matcha Coconut", category: "Specialty Coffee", price: 160, image: "images/matcha/32.jpg", descAr: "ماتشا بحليب وجوز الهند.", descEn: "Matcha blended with coconut milk.", inStock: true },
-            { id: 33, nameAr: "Matcha Frappe", nameEn: "Matcha Frappe", category: "Specialty Coffee", price: 160, image: "images/matcha/33.jpg", descAr: "ماتشا فرابتيه مثلج ومخفوق.", descEn: "Blended matcha frappe.", inStock: true },
-            { id: 34, nameAr: "Ice Matcha Latte", nameEn: "Ice Matcha Latte", category: "Specialty Coffee", price: 150, image: "images/matcha/34.jpg", descAr: "ماتشا لاتيه مثلج ناعم.", descEn: "Chilled smooth iced matcha latte.", inStock: true },
-            { id: 35, nameAr: "Matcha Honey Lemon", nameEn: "Matcha Honey Lemon", category: "Specialty Coffee", price: 160, image: "images/matcha/35.jpg", descAr: "ماتشا بالعسل والليمون.", descEn: "Matcha with honey and lemon.", inStock: true },
-            { id: 36, nameAr: "Milkshake Vanilla", nameEn: "Milkshake Vanilla", category: "Milkshake", price: 130, image: "images/milkshake/36.jpg", descAr: "ميلك شيك فانيليا غني وكريمي.", descEn: "Rich and creamy vanilla milkshake.", inStock: true },
-            { id: 37, nameAr: "Milkshake salted caramel", nameEn: "Milkshake salted caramel", category: "Milkshake", price: 160, image: "images/milkshake/37.jpg", descAr: "ميلك شيك كراميل مملح ولذيذ.", descEn: "Decadent salted caramel milkshake.", inStock: true },
-            { id: 38, nameAr: "Milkshake Pistachio", nameEn: "Milkshake Pistachio", category: "Milkshake", price: 170, image: "images/milkshake/38.jpg", descAr: "ميلك شيك فستق فاخر ومميز.", descEn: "Luxurious pistachio milkshake.", inStock: true },
-            { id: 39, nameAr: "Milkshake Blueberry", nameEn: "Milkshake Blueberry", category: "Milkshake", price: 130, image: "images/milkshake/39.jpg", descAr: "ميلك شيك توت أزرق منعش.", descEn: "Refreshing blueberry milkshake.", inStock: true },
-            { id: 40, nameAr: "Milkshake caramel", nameEn: "Milkshake caramel", category: "Milkshake", price: 130, image: "images/milkshake/40.jpg", descAr: "ميلك شيك بصوص الكراميل الحلو.", descEn: "Sweet caramel flavored milkshake.", inStock: true },
-            { id: 41, nameAr: "Smoothie Blueberry", nameEn: "Smoothie Blueberry", category: "Smoothie", price: 110, image: "images/smoothie/41.jpg", descAr: "سموذي توت أزرق طبيعي ومجروش.", descEn: "Natural blended blueberry smoothie.", inStock: true },
-            { id: 42, nameAr: "Smoothie Lemon mint", nameEn: "Smoothie Lemon mint", category: "Smoothie", price: 110, image: "images/smoothie/42.jpg", descAr: "سموذي ليمون بالنعناع المنعش.", descEn: "Cooling lemon mint smoothie.", inStock: true },
-            { id: 43, nameAr: "Smoothie lychee", nameEn: "Smoothie lychee", category: "Smoothie", price: 110, image: "images/smoothie/43.jpg", descAr: "سموذي ليتشي الاستوائي المنعش.", descEn: "Exotic tropical lychee smoothie.", inStock: true },
-            { id: 44, nameAr: "Smoothie Strawberry", nameEn: "Smoothie Strawberry", category: "Smoothie", price: 110, image: "images/smoothie/44.jpg", descAr: "سموذي فراولة طازجة ومجروشة.", descEn: "Fresh blended strawberry smoothie.", inStock: true },
-            { id: 45, nameAr: "Green Tea", nameEn: "Green Tea", category: "Non-Coffee", price: 60, image: "images/not-coffee/45.jpg", descAr: "شاي أخضر صحي ودافئ.", descEn: "Healthy warm green tea.", inStock: true },
-            { id: 46, nameAr: "English Tea", nameEn: "English Tea", category: "Non-Coffee", price: 60, image: "images/not-coffee/46.jpg", descAr: "شاي إنجليزي أسود أصيل.", descEn: "Classic black English tea.", inStock: true },
-            { id: 47, nameAr: "Karak Tea", nameEn: "Karak Tea", category: "Non-Coffee", price: 110, image: "images/not-coffee/47.jpg", descAr: "شاي كرك بالحليب والبهارات.", descEn: "Spiced Karak tea with milk.", inStock: true },
-            { id: 48, nameAr: "Hot Chocolate", nameEn: "Hot Chocolate", category: "Non-Coffee", price: 140, image: "images/not-coffee/48.jpg", descAr: "شوكولاتة ساخنة غنية ومخملية.", descEn: "Rich velvety hot chocolate.", inStock: true },
-            { id: 49, nameAr: "Mojito Blueberry", nameEn: "Mojito Blueberry", category: "Mojito", price: 99, image: "images/mojito/49.jpg", descAr: "موهيتو توت أزرق غازي ومنعش.", descEn: "Sparkling blueberry mojito.", inStock: true },
-            { id: 50, nameAr: "Mojito San Set", nameEn: "Mojito San Set", category: "Mojito", price: 90, image: "images/mojito/50.jpg", descAr: "موهيتو صان ست الاستوائي.", descEn: "Tropical sunset mojito flavor.", inStock: true },
-            { id: 51, nameAr: "Mojito Blue Blue", nameEn: "Mojito Blue Blue", category: "Mojito", price: 90, image: "images/mojito/51.jpg", descAr: "موهيتو أزرق منعش ومميز.", descEn: "Refreshing blue lagoon mojito.", inStock: true },
-            { id: 52, nameAr: "Mojito Red Bull", nameEn: "Mojito Red Bull", category: "Mojito", price: 150, image: "images/mojito/52.jpg", descAr: "موهيتو مع مشروب الطاقة ريدبول.", descEn: "Mojito energized with Red Bull.", inStock: true },
-            { id: 53, nameAr: "Mojito Passion", nameEn: "Mojito Passion", category: "Mojito", price: 90, image: "images/mojito/53.jpg", descAr: "موهيتو باشن فروت المنعش.", descEn: "Passion fruit flavored mojito.", inStock: true },
-            { id: 54, nameAr: "mango", nameEn: "mango", category: "Fresh Juice", price: 90, image: "images/fresh-juices/54.jpg", descAr: "عصير مانجو طازج وطبيعي 100%.", descEn: "100% fresh natural mango juice.", inStock: true },
-            { id: 55, nameAr: "Strawberry", nameEn: "Strawberry", category: "Fresh Juice", price: 90, image: "images/fresh-juices/55.jpg", descAr: "عصير فراولة طازج ولذيذ.", descEn: "Fresh sweet strawberry juice.", inStock: true },
-            { id: 56, nameAr: "guava", nameEn: "guava", category: "Fresh Juice", price: 90, image: "images/fresh-juices/56.jpg", descAr: "عصير جوافة طبيعي ومغذي.", descEn: "Fresh natural guava juice.", inStock: true },
-            { id: 57, nameAr: "orange", nameEn: "orange", category: "Fresh Juice", price: 90, image: "images/fresh-juices/57.jpg", descAr: "عصير برتقال فريش غني فيتامين سي.", descEn: "Fresh vitamin C rich orange juice.", inStock: true },
-            { id: 58, nameAr: "Lemon Mint", nameEn: "Lemon Mint", category: "Fresh Juice", price: 90, image: "images/fresh-juices/58.jpg", descAr: "عصير ليمون بالنعناع الطازج.", descEn: "Fresh lemon mint juice.", inStock: true },
-            { id: 59, nameAr: "Water 330ml", nameEn: "Water 330ml", category: "Soft Drink", price: 10, image: "images/soft-drinks/59.jpg", descAr: "مياه معدنية نقية 330 مل.", descEn: "Pure mineral water 330ml.", inStock: true },
-            { id: 60, nameAr: "Water 600ml", nameEn: "Water 600ml", category: "Soft Drink", price: 15, image: "images/soft-drinks/60.jpg", descAr: "مياه معدنية نقية 600 مل.", descEn: "Pure mineral water 600ml.", inStock: true },
-            { id: 61, nameAr: "Sparking Water", nameEn: "Sparking Water", category: "Soft Drink", price: 60, image: "images/soft-drinks/61.jpg", descAr: "مياه فوارة منعشة.", descEn: "Refreshing sparkling water.", inStock: true },
-            { id: 62, nameAr: "Redbull", nameEn: "Redbull", category: "Soft Drink", price: 100, image: "images/soft-drinks/62.jpg", descAr: "مشروب طاقة ريدبول الأصلي.", descEn: "Original energy drink Red Bull.", inStock: true },
-            { id: 63, nameAr: "Soft drink", nameEn: "Soft drink", category: "Soft Drink", price: 60, image: "images/soft-drinks/63.jpg", descAr: "مشروبات غازية متنوعة ومنعشة.", descEn: "Various refreshing soft drinks.", inStock: true },
-            { id: 64, nameAr: "Chocolate Fudge", nameEn: "Chocolate Fudge", category: "Cookie & Cake", price: 99, image: "images/cookies-and-cake/64.jpg", descAr: "كيك شوكولاتة فدج غني ولذيذ.", descEn: "Rich chocolate fudge cake slice.", inStock: true },
-            { id: 65, nameAr: "Molten Chocolate Cake", nameEn: "Molten Chocolate Cake", category: "Cookie & Cake", price: 99, image: "images/cookies-and-cake/65.jpg", descAr: "كيك مولتن شوكولاتة دافئ سايل.", descEn: "Warm gooey molten chocolate cake.", inStock: true },
-            { id: 66, nameAr: "Red Velvet Cake", nameEn: "Red Velvet Cake", category: "Cookie & Cake", price: 99, image: "images/cookies-and-cake/66.jpg", descAr: "كيك ريد فيلفت بطبقات الكريمة.", descEn: "Classic red velvet cake slice.", inStock: true },
-            { id: 67, nameAr: "San Sebastian Cheesecake", nameEn: "San Sebastian Cheesecake", category: "Cookie & Cake", price: 110, image: "images/cookies-and-cake/67.jpg", descAr: "تشيز كيك سان سباستيان المحروق.", descEn: "Burnt San Sebastian cheesecake.", inStock: true },
-            { id: 68, nameAr: "Double Chocolate Vanilla Cookies", nameEn: "Double Chocolate Vanilla Cookies", category: "Cookie & Cake", price: 70, image: "images/cookies-and-cake/68.jpg", descAr: "كوكيز شوكولاتة وفانيليا مقرمش.", descEn: "Double chocolate vanilla cookies.", inStock: true },
-            { id: 69, nameAr: "Triple Chocolate Cookies", nameEn: "Triple Chocolate Cookies", category: "Cookie & Cake", price: 70, image: "images/cookies-and-cake/69.jpg", descAr: "كوكيز غني بثلاثة أنواع شوكولاتة.", descEn: "Triple chocolate decadent cookies.", inStock: true },
-            { id: 70, nameAr: "Crossiant", nameEn: "Crossiant", category: "Bakery", price: 45, image: "images/bakery/70.jpg", descAr: "كرواسون فرنسي طازج ومقرمش.", descEn: "Fresh flaky French butter croissant.", inStock: true },
-            { id: 71, nameAr: "Croissant Roumy", nameEn: "Croissant Roumy", category: "Bakery", price: 70, image: "images/bakery/71.jpg", descAr: "كرواسون محشو بالجبن الرومي.", descEn: "Croissant stuffed with Roumy cheese.", inStock: true },
-            { id: 72, nameAr: "Pate White Cheese", nameEn: "Pate White Cheese", category: "Bakery", price: 70, image: "images/bakery/72.jpg", descAr: "باتيه طازج بالجبن الأبيض.", descEn: "Fresh pate with white cheese.", inStock: true },
-            { id: 73, nameAr: "Danish Custard", nameEn: "Danish Custard", category: "Bakery", price: 70, image: "images/bakery/73.jpg", descAr: "دانش محشو بكريمة الكاسترد الفاخرة.", descEn: "Custard filled Danish pastry.", inStock: true },
-            { id: 74, nameAr: "Pain Mixed Cheese", nameEn: "Pain Mixed Cheese", category: "Bakery", price: 80, image: "images/bakery/74.jpg", descAr: "مخبوزات بالجبن المشكل السائح.", descEn: "Mixed cheese baked pastry.", inStock: true }
+            { id: 1, nameAr: "اسبريسو س", nameEn: "Espresso S", category: "Hot Coffee", price: 60, image: "images/hot-coffee/01.jpg", descAr: "جرعة إسبريسو مركزة غنية.", descEn: "Rich concentrated espresso shot.", inStock: true },
+            { id: 2, nameAr: "اسبريسو دوبل", nameEn: "Espresso D", category: "Hot Coffee", price: 80, image: "images/hot-coffee/02.jpg", descAr: "جرعة إسبريسو مضاعفة.", descEn: "Double shot of espresso.", inStock: true },
+            { id: 3, nameAr: "قهوة تركي", nameEn: "Turkish Coffee", category: "Hot Coffee", price: 50, image: "images/hot-coffee/03.jpg", descAr: "قهوة تركي أصلية على الوجه مضبوطة.", descEn: "Traditional authentic Turkish coffee.", inStock: true },
+            { id: 4, nameAr: "قهوة فرنساوي", nameEn: "French Coffee", category: "Hot Coffee", price: 99, image: "images/hot-coffee/04.jpg", descAr: "قهوة فرنسية بالحليب ناعمة.", descEn: "Smooth French coffee with milk.", inStock: true },
+            { id: 5, nameAr: "ماكياتو", nameEn: "Macchiato", category: "Hot Coffee", price: 80, image: "images/hot-coffee/05.jpg", descAr: "إسبريسو مع لمسة رغوة حليب خفيفة.", descEn: "Espresso with a dollop of foam.", inStock: true },
+            { id: 6, nameAr: "كابتشينو", nameEn: "Cappuccino", category: "Hot Coffee", price: 110, image: "images/hot-coffee/06.jpg", descAr: "إسبريسو وحليب مبخر ورغوة كثيفة.", descEn: "Espresso, steamed milk, and thick foam.", inStock: true },
+            { id: 7, nameAr: "لاتيه", nameEn: "Latte", category: "Hot Coffee", price: 120, image: "images/hot-coffee/07.jpg", descAr: "إسبريسو ناعم مع حليب دافئ.", descEn: "Smooth espresso with steamed milk.", inStock: true },
+            { id: 8, nameAr: "إسبانيش لاتيه", nameEn: "Spanish Latte", category: "Hot Coffee", price: 140, image: "images/hot-coffee/08.jpg", descAr: "لاتيه مع حليب مكثف محلى.", descEn: "Latte with sweetened condensed milk.", inStock: true },
+            { id: 9, nameAr: "موكا", nameEn: "Mocha", category: "Hot Coffee", price: 150, image: "images/hot-coffee/09.jpg", descAr: "مزيج الإسبريسو الفاخر مع الشوكولاتة.", descEn: "Espresso mixed with chocolate and milk.", inStock: true },
+            { id: 10, nameAr: "فلات وايت", nameEn: "Flat White", category: "Hot Coffee", price: 90, image: "images/hot-coffee/10.jpg", descAr: "إسبريسو قوي مع طبقة حليب رقيقة.", descEn: "Strong espresso with microfoam milk.", inStock: true },
+            { id: 11, nameAr: "كورتادو", nameEn: "Cortado", category: "Hot Coffee", price: 85, image: "images/hot-coffee/11.jpg", descAr: "مقادير متساوية من الإسبريسو والحليب.", descEn: "Equal parts espresso and steamed milk.", inStock: true },
+            { id: 12, nameAr: "كراميل ماكياتو", nameEn: "Caramel Macchiato", category: "Hot Coffee", price: 150, image: "images/hot-coffee/12.jpg", descAr: "إسبريسو وحليب مع صوص الكراميل.", descEn: "Espresso, milk, and sweet caramel drizzle.", inStock: true },
+            { id: 13, nameAr: "سولتد كراميل لاتيه", nameEn: "Salted Caramel Latte", category: "Hot Coffee", price: 150, image: "images/hot-coffee/13.jpg", descAr: "لاتيه بصوص الكراميل المملح.", descEn: "Latte with salted caramel flavor.", inStock: true },
+            { id: 14, nameAr: "فرنش بريس", nameEn: "French Press", category: "Hot Coffee", price: 130, image: "images/hot-coffee/14.jpg", descAr: "قهوة فرنس بريس غنية.", descEn: "Rich brewed French press coffee.", inStock: true },
+            { id: 15, nameAr: "آيس لاتيه", nameEn: "Ice Latte", category: "Iced Coffee", price: 120, image: "images/ice-coffee/15.jpg", descAr: "إسبريسو مثلج مع حليب بارد.", descEn: "Chilled espresso with cold milk over ice.", inStock: true },
+            { id: 16, nameAr: "آيس موكا", nameEn: "Ice Mocha", category: "Iced Coffee", price: 130, image: "images/ice-coffee/16.jpg", descAr: "موكا مثلجة مع الشوكولاتة والثلج.", descEn: "Iced mocha with chocolate and ice.", inStock: true },
+            { id: 17, nameAr: "آيس وايت موكا", nameEn: "Ice White Mocha", category: "Iced Coffee", price: 130, image: "images/ice-coffee/17.jpg", descAr: "شوكولاتة بيضاء مثلجة مع الإسبريسو.", descEn: "Chilled white chocolate mocha.", inStock: true },
+            { id: 18, nameAr: "آيس إسبانيش لاتيه", nameEn: "Ice Spanish Latte", category: "Iced Coffee", price: 160, image: "images/ice-coffee/18.jpg", descAr: "سبانش لاتيه مثلج غني.", descEn: "Sweet iced Spanish latte.", inStock: true },
+            { id: 19, nameAr: "آيس كراميل لاتيه", nameEn: "Ice Caramel Latte", category: "Iced Coffee", price: 140, image: "images/ice-coffee/19.jpg", descAr: "لاتيه مثلج مع نكهة الكراميل.", descEn: "Iced latte infused with caramel.", inStock: true },
+            { id: 20, nameAr: "آيس سولتد كراميل", nameEn: "Ice Salted Caramel", category: "Iced Coffee", price: 130, image: "images/ice-coffee/20.jpg", descAr: "كراميل مملح مثلج ومنعش.", descEn: "Refreshing iced salted caramel.", inStock: true },
+            { id: 21, nameAr: "آيس كراميل ماكياتو", nameEn: "Ice Caramel Macchiato", category: "Iced Coffee", price: 140, image: "images/ice-coffee/21.jpg", descAr: "ماكياتو كراميل مثلج وطبقات.", descEn: "Layered iced caramel macchiato.", inStock: true },
+            { id: 22, nameAr: "فرابيه كراميل", nameEn: "Frappe Caramel", category: "Iced Frappe", price: 150, image: "images/ice-frappe/22.jpg", descAr: "فرابتيه مثلج ومخفوق بالكراميل.", descEn: "Blended ice caramel frappe.", inStock: true },
+            { id: 23, nameAr: "فرابيه سولتد كراميل", nameEn: "Frappe Salted Caramel", category: "Iced Frappe", price: 150, image: "images/ice-frappe/23.jpg", descAr: "فرابتيه كراميل مملح غني.", descEn: "Salted caramel blended frappe.", inStock: true },
+            { id: 24, nameAr: "فرابيه موكا", nameEn: "Frappe Mocha", category: "Iced Frappe", price: 160, image: "images/ice-frappe/24.jpg", descAr: "فرابتيه موكا شوكولاتة مثلج.", descEn: "Chocolate mocha blended frappe.", inStock: true },
+            { id: 25, nameAr: "فرابيه فانيليا", nameEn: "Frappe Vanilla", category: "Iced Frappe", price: 150, image: "images/ice-frappe/25.jpg", descAr: "فرابتيه فانيليا ناعم ومثلج.", descEn: "Smooth vanilla blended frappe.", inStock: true },
+            { id: 26, nameAr: "فرابيه بيستاشيو", nameEn: "Frappe Pistachio", category: "Iced Frappe", price: 170, image: "images/ice-frappe/26.jpg", descAr: "فرابتيه فستق فاخر ومميز.", descEn: "Premium pistachio blended frappe.", inStock: true },
+            { id: 27, nameAr: "هوت ماتشا", nameEn: "Hot Matcha", category: "Specialty Coffee", price: 140, image: "images/matcha/27.jpg", descAr: "ماتشا يابانية ساخنة ودافئة.", descEn: "Warm traditional Japanese matcha.", inStock: true },
+            { id: 28, nameAr: "آيس ماتشا", nameEn: "Ice Matcha", category: "Specialty Coffee", price: 140, image: "images/matcha/28.jpg", descAr: "ماتشا مثلجة ومنعشة.", descEn: "Chilled refreshing iced matcha.", inStock: true },
+            { id: 29, nameAr: "ماتشا بلوبيري", nameEn: "Matcha Blueberry", category: "Specialty Coffee", price: 160, image: "images/matcha/29.jpg", descAr: "ماتشا مع نكهة التوت الأزرق.", descEn: "Matcha infused with blueberry flavor.", inStock: true },
+            { id: 30, nameAr: "سويت ماتشا كلاود", nameEn: "Sweet Matcha Cloud", category: "Specialty Coffee", price: 180, image: "images/matcha/30.jpg", descAr: "ماتشا مع رغوة غنية.", descEn: "Matcha topped with sweet cloud foam.", inStock: true },
+            { id: 31, nameAr: "ماتشا فانيليا بيستاشيو", nameEn: "Matcha Vanilla Pistachio", category: "Specialty Coffee", price: 160, image: "images/matcha/31.jpg", descAr: "مزيج ماتشا وفانيليا وفستق.", descEn: "Matcha with vanilla and pistachio notes.", inStock: true },
+            { id: 32, nameAr: "ماتشا كوكونت", nameEn: "Matcha Coconut", category: "Specialty Coffee", price: 160, image: "images/matcha/32.jpg", descAr: "ماتشا بحليب وجوز الهند.", descEn: "Matcha blended with coconut milk.", inStock: true },
+            { id: 33, nameAr: "ماتشا فرابيه", nameEn: "Matcha Frappe", category: "Specialty Coffee", price: 160, image: "images/matcha/33.jpg", descAr: "ماتشا فرابتيه مثلج ومخفوق.", descEn: "Blended matcha frappe.", inStock: true },
+            { id: 34, nameAr: "آيس ماتشا لاتيه", nameEn: "Ice Matcha Latte", category: "Specialty Coffee", price: 150, image: "images/matcha/34.jpg", descAr: "ماتشا لاتيه مثلج ناعم.", descEn: "Chilled smooth iced matcha latte.", inStock: true },
+            { id: 35, nameAr: "ماتشا هاني ليمون", nameEn: "Matcha Honey Lemon", category: "Specialty Coffee", price: 160, image: "images/matcha/35.jpg", descAr: "ماتشا بالعسل والليمون.", descEn: "Matcha with honey and lemon.", inStock: true },
+            { id: 36, nameAr: "ميلك شيك فانيليا", nameEn: "Milkshake Vanilla", category: "Milkshake", price: 130, image: "images/milkshake/36.jpg", descAr: "ميلك شيك فانيليا غني وكريمي.", descEn: "Rich and creamy vanilla milkshake.", inStock: true },
+            { id: 37, nameAr: "ميلك شيك سولتد كراميل", nameEn: "Milkshake Salted Caramel", category: "Milkshake", price: 160, image: "images/milkshake/37.jpg", descAr: "ميلك شيك كراميل مملح ولذيذ.", descEn: "Decadent salted caramel milkshake.", inStock: true },
+            { id: 38, nameAr: "ميلك شيك بيستاشيو", nameEn: "Milkshake Pistachio", category: "Milkshake", price: 170, image: "images/milkshake/38.jpg", descAr: "ميلك شيك فستق فاخر ومميز.", descEn: "Luxurious pistachio milkshake.", inStock: true },
+            { id: 39, nameAr: "ميلك شيك بلوبيري", nameEn: "Milkshake Blueberry", category: "Milkshake", price: 130, image: "images/milkshake/39.jpg", descAr: "ميلك شيك توت أزرق منعش.", descEn: "Refreshing blueberry milkshake.", inStock: true },
+            { id: 40, nameAr: "ميلك شيك كراميل", nameEn: "Milkshake Caramel", category: "Milkshake", price: 130, image: "images/milkshake/40.jpg", descAr: "ميلك شيك بصوص الكراميل الحلو.", descEn: "Sweet caramel flavored milkshake.", inStock: true },
+            { id: 41, nameAr: "سموذي بلوبيري", nameEn: "Smoothie Blueberry", category: "Smoothie", price: 110, image: "images/smoothie/41.jpg", descAr: "سموذي توت أزرق طبيعي ومجروش.", descEn: "Natural blended blueberry smoothie.", inStock: true },
+            { id: 42, nameAr: "سموذي ليمون نعناع", nameEn: "Smoothie Lemon Mint", category: "Smoothie", price: 110, image: "images/smoothie/42.jpg", descAr: "سموذي ليمون بالنعناع المنعش.", descEn: "Cooling lemon mint smoothie.", inStock: true },
+            { id: 43, nameAr: "سموذي ليتشي", nameEn: "Smoothie Lychee", category: "Smoothie", price: 110, image: "images/smoothie/43.jpg", descAr: "سموذي ليتشي الاستوائي المنعش.", descEn: "Exotic tropical lychee smoothie.", inStock: true },
+            { id: 44, nameAr: "سموذي فراولة", nameEn: "Smoothie Strawberry", category: "Smoothie", price: 110, image: "images/smoothie/44.jpg", descAr: "سموذي فراولة طازجة ومجروشة.", descEn: "Fresh blended strawberry smoothie.", inStock: true },
+            { id: 45, nameAr: "شاي أخضر", nameEn: "Green Tea", category: "Non-Coffee", price: 60, image: "images/not-coffee/45.jpg", descAr: "شاي أخضر صحي ودافئ.", descEn: "Healthy warm green tea.", inStock: true },
+            { id: 46, nameAr: "شاي إنجليزي", nameEn: "English Tea", category: "Non-Coffee", price: 60, image: "images/not-coffee/46.jpg", descAr: "شاي إنجليزي أسود أصيل.", descEn: "Classic black English tea.", inStock: true },
+            { id: 47, nameAr: "شاي كرك", nameEn: "Karak Tea", category: "Non-Coffee", price: 110, image: "images/not-coffee/47.jpg", descAr: "شاي كرك بالحليب والبهارات.", descEn: "Spiced Karak tea with milk.", inStock: true },
+            { id: 48, nameAr: "شوكولاتة ساخنة", nameEn: "Hot Chocolate", category: "Non-Coffee", price: 140, image: "images/not-coffee/48.jpg", descAr: "شوكولاتة ساخنة غنية ومخملية.", descEn: "Rich velvety hot chocolate.", inStock: true },
+            { id: 49, nameAr: "موهيتو بلوبيري", nameEn: "Mojito Blueberry", category: "Mojito", price: 99, image: "images/mojito/49.jpg", descAr: "موهيتو توت أزرق غازي ومنعش.", descEn: "Sparkling blueberry mojito.", inStock: true },
+            { id: 50, nameAr: "موهيتو صن سيت", nameEn: "Mojito San Set", category: "Mojito", price: 90, image: "images/mojito/50.jpg", descAr: "موهيتو صان ست الاستوائي.", descEn: "Tropical sunset mojito flavor.", inStock: true },
+            { id: 51, nameAr: "موهيتو بلو بلو", nameEn: "Mojito Blue Blue", category: "Mojito", price: 90, image: "images/mojito/51.jpg", descAr: "موهيتو أزرق منعش ومميز.", descEn: "Refreshing blue lagoon mojito.", inStock: true },
+            { id: 52, nameAr: "موهيتو ريد بول", nameEn: "Mojito Red Bull", category: "Mojito", price: 150, image: "images/mojito/52.jpg", descAr: "موهيتو مع مشروب الطاقة ريدبول.", descEn: "Mojito energized with Red Bull.", inStock: true },
+            { id: 53, nameAr: "موهيتو باشن", nameEn: "Mojito Passion", category: "Mojito", price: 90, image: "images/mojito/53.jpg", descAr: "موهيتو باشن فروت المنعش.", descEn: "Passion fruit flavored mojito.", inStock: true },
+            { id: 54, nameAr: "مانجو", nameEn: "Mango", category: "Fresh Juice", price: 90, image: "images/fresh-juices/54.jpg", descAr: "عصير مانجو طازج وطبيعي 100%.", descEn: "100% fresh natural mango juice.", inStock: true },
+            { id: 55, nameAr: "فراولة", nameEn: "Strawberry", category: "Fresh Juice", price: 90, image: "images/fresh-juices/55.jpg", descAr: "عصير فراولة طازج ولذيذ.", descEn: "Fresh sweet strawberry juice.", inStock: true },
+            { id: 56, nameAr: "جوافة", nameEn: "Guava", category: "Fresh Juice", price: 90, image: "images/fresh-juices/56.jpg", descAr: "عصير جوافة طبيعي ومغذي.", descEn: "Fresh natural guava juice.", inStock: true },
+            { id: 57, nameAr: "برتقال", nameEn: "Orange", category: "Fresh Juice", price: 90, image: "images/fresh-juices/57.jpg", descAr: "عصير برتقال فريش غني فيتامين سي.", descEn: "Fresh vitamin C rich orange juice.", inStock: true },
+            { id: 58, nameAr: "ليمون نعناع", nameEn: "Lemon Mint", category: "Fresh Juice", price: 90, image: "images/fresh-juices/58.jpg", descAr: "عصير ليمون بالنعناع الطازج.", descEn: "Fresh lemon mint juice.", inStock: true },
+            { id: 59, nameAr: "مياه 330 مل", nameEn: "Water 330ml", category: "Soft Drink", price: 10, image: "images/soft-drinks/59.jpg", descAr: "مياه معدنية نقية 330 مل.", descEn: "Pure mineral water 330ml.", inStock: true },
+            { id: 60, nameAr: "مياه 600 مل", nameEn: "Water 600ml", category: "Soft Drink", price: 15, image: "images/soft-drinks/60.jpg", descAr: "مياه معدنية نقية 600 مل.", descEn: "Pure mineral water 600ml.", inStock: true },
+            { id: 61, nameAr: "مياه فوارة", nameEn: "Sparkling Water", category: "Soft Drink", price: 60, image: "images/soft-drinks/61.jpg", descAr: "مياه فوارة منعشة.", descEn: "Refreshing sparkling water.", inStock: true },
+            { id: 62, nameAr: "ريد بول", nameEn: "Red Bull", category: "Soft Drink", price: 100, image: "images/soft-drinks/62.jpg", descAr: "مشروب طاقة ريدبول الأصلي.", descEn: "Original energy drink Red Bull.", inStock: true },
+            { id: 63, nameAr: "مشروب غازي", nameEn: "Soft Drink", category: "Soft Drink", price: 60, image: "images/soft-drinks/63.jpg", descAr: "مشروبات غازية متنوعة ومنعشة.", descEn: "Various refreshing soft drinks.", inStock: true },
+            { id: 64, nameAr: "فدج شوكولاتة", nameEn: "Chocolate Fudge", category: "Cookie & Cake", price: 99, image: "images/cookies-and-cake/64.jpg", descAr: "كيك شوكولاتة فدج غني ولذيذ.", descEn: "Rich chocolate fudge cake slice.", inStock: true },
+            { id: 65, nameAr: "مولتن شوكولاتة", nameEn: "Molten Chocolate Cake", category: "Cookie & Cake", price: 99, image: "images/cookies-and-cake/65.jpg", descAr: "كيك مولتن شوكولاتة دافئ سايل.", descEn: "Warm gooey molten chocolate cake.", inStock: true },
+            { id: 66, nameAr: "ريد فيلفت", nameEn: "Red Velvet Cake", category: "Cookie & Cake", price: 99, image: "images/cookies-and-cake/66.jpg", descAr: "كيك ريد فيلفت بطبقات الكريمة.", descEn: "Classic red velvet cake slice.", inStock: true },
+            { id: 67, nameAr: "سان سباستيان تشيز كيك", nameEn: "San Sebastian Cheesecake", category: "Cookie & Cake", price: 110, image: "images/cookies-and-cake/67.jpg", descAr: "تشيز كيك سان سباستيان المحروق.", descEn: "Burnt San Sebastian cheesecake.", inStock: true },
+            { id: 68, nameAr: "دوبل شوكولاتة فانيليا كوكيز", nameEn: "Double Chocolate Vanilla Cookies", category: "Cookie & Cake", price: 70, image: "images/cookies-and-cake/68.jpg", descAr: "كوكيز شوكولاتة وفانيليا مقرمش.", descEn: "Double chocolate vanilla cookies.", inStock: true },
+            { id: 69, nameAr: "تريبل شوكولاتة كوكيز", nameEn: "Triple Chocolate Cookies", category: "Cookie & Cake", price: 70, image: "images/cookies-and-cake/69.jpg", descAr: "كوكيز غني بثلاثة أنواع شوكولاتة.", descEn: "Triple chocolate decadent cookies.", inStock: true },
+            { id: 70, nameAr: "كرواسون", nameEn: "Croissant", category: "Bakery", price: 45, image: "images/bakery/70.jpg", descAr: "كرواسون فرنسي طازج ومقرمش.", descEn: "Fresh flaky French butter croissant.", inStock: true },
+            { id: 71, nameAr: "كرواسون رومي", nameEn: "Croissant Roumy", category: "Bakery", price: 70, image: "images/bakery/71.jpg", descAr: "كرواسون محشو بالجبن الرومي.", descEn: "Croissant stuffed with Roumy cheese.", inStock: true },
+            { id: 72, nameAr: "باتيه جبنة بيضاء", nameEn: "Pate White Cheese", category: "Bakery", price: 70, image: "images/bakery/72.jpg", descAr: "باتيه طازج بالجبن الأبيض.", descEn: "Fresh pate with white cheese.", inStock: true },
+            { id: 73, nameAr: "دانش كاسترد", nameEn: "Danish Custard", category: "Bakery", price: 70, image: "images/bakery/73.jpg", descAr: "دانش محشو بكريمة الكاسترد الفاخرة.", descEn: "Custard filled Danish pastry.", inStock: true },
+            { id: 74, nameAr: "خبز بالجبن المشكل", nameEn: "Pain Mixed Cheese", category: "Bakery", price: 80, image: "images/bakery/74.jpg", descAr: "مخبوزات بالجبن المشكل السائح.", descEn: "Mixed cheese baked pastry.", inStock: true }
         ];
 
         let menuItems;
@@ -1415,6 +1705,73 @@
             showToast(currentLang === 'ar' ? (isDark ? 'الوضع الليلي 🌙' : 'الوضع النهاري ☀️') : (isDark ? 'Dark Mode 🌙' : 'Light Mode ☀️'), isDark ? '🌙' : '☀️');
         }
 
+        /* ═══════ SPLASH SCREEN ═══════ */
+        function initSplashBeans() {
+            const container = $('splashBeans');
+            if (!container) return;
+            const icons = ['☕', '🫘', '🍪', '✨'];
+            let html = '';
+            for (let i = 0; i < 15; i++) {
+                const icon = icons[Math.floor(Math.random() * icons.length)];
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = 18 + Math.random() * 10;
+                const size = 16 + Math.random() * 20;
+                html += `<span class="splash-bean" style="left:${left}%;animation-delay:${delay}s;animation-duration:${duration}s;font-size:${size}px;">${icon}</span>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function updateSplashLanguage() {
+            const isAr = currentLang === 'ar';
+            $('splashLangBtn').innerText = isAr ? 'EN' : 'AR';
+            $('splashBrandAr').innerText = isAr ? 'الغرباوي' : 'Al-Gharbawy';
+            $('splashWelcome').innerText = isAr ? '✨ أهلاً وسهلاً بيك ✨' : '✨ Welcome ✨';
+            $('splashWelcomeSub').innerText = isAr 
+                ? 'اتفضل اختار طلبك من القائمة واستمتع بأحلى قهوة ☕' 
+                : 'Browse our menu and enjoy the finest coffee ☕';
+            $('splashEnterText').innerText = isAr ? 'دخول القائمة' : 'Enter Menu';
+            $('splashHint').innerText = isAr 
+                ? '☕ الغرباوي — تجربة قهوة استثنائية' 
+                : '☕ Al-Gharbawy — An exceptional coffee experience';
+        }
+
+        function toggleLanguageFromSplash() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('gharbaoui_lang', currentLang);
+            updateSplashLanguage();
+            applyLanguageUI();
+            renderCustomerMenu();
+            if (featuredItems.length > 0) showSlide(currentSlide);
+        }
+
+        function enterMenu() {
+            sessionStorage.setItem(SPLASH_KEY, 'true');
+            
+            const splash = $('splashScreen');
+            splash.classList.add('hidden-splash');
+            
+            setTimeout(() => {
+                if (splash && splash.parentNode) splash.style.display = 'none';
+            }, 800);
+        }
+
+        function shouldShowSplash() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('skip')) return false;
+            return sessionStorage.getItem(SPLASH_KEY) !== 'true';
+        }
+
+        function initSplash() {
+            if (!shouldShowSplash()) {
+                $('splashScreen').style.display = 'none';
+                return;
+            }
+            initSplashBeans();
+            updateSplashLanguage();
+        }
+
+        /* ═══════ INIT ═══════ */
         window.addEventListener('DOMContentLoaded', () => {
             initDarkMode();
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -1449,6 +1806,7 @@
 
             setupSheetDrag();
             setupPWAManifest();
+            initSplash();
         });
 
         function setupPWAManifest() {
@@ -1752,13 +2110,6 @@
             }).join('');
 
             footer.innerHTML = `
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 20px;">🪑</span>
-                    <input type="text" id="tableNumberInput" class="form-input" 
-                           placeholder="${currentLang === 'en' ? 'Table Number' : 'رقم الطاولة'}" 
-                           value="${tableNumber}" maxlength="6" style="text-align: center; font-weight: 900; letter-spacing: 2px; font-size: 14px;"
-                           oninput="saveTableNumber(this.value)">
-                </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 12px; font-weight: 800; color: var(--text-secondary);">
                         ${currentLang === 'en' ? 'Total:' : 'الإجمالي:'}
@@ -1774,11 +2125,6 @@
                     </button>
                 </div>
             `;
-        }
-
-        function saveTableNumber(value) {
-            tableNumber = value.replace(/[^0-9]/g, '');
-            localStorage.setItem('gharbaoui_table', tableNumber);
         }
 
         function showOrderToWaiter() {
@@ -1812,19 +2158,11 @@
                 `;
             }).join('');
 
-            const tableBoxHtml = tableNumber ? `
-                <div class="waiter-table-box">
-                    <div class="waiter-table-label">${currentLang === 'en' ? 'TABLE' : 'طاولة'}</div>
-                    <div class="waiter-table-num">${tableNumber}</div>
-                </div>
-            ` : '';
-
             $('waiterContent').innerHTML = `
                 <div class="waiter-header">
                     <span class="waiter-logo">☕</span>
                     <h1 class="waiter-brand">${currentLang === 'en' ? 'Al-Gharbawy' : 'الغرباوي'}</h1>
                     <div class="waiter-subtitle">${currentLang === 'en' ? 'Order Ticket' : 'تذكرة الطلب'}</div>
-                    ${tableBoxHtml}
                 </div>
                 <div class="waiter-order-title">📋 ${currentLang === 'en' ? 'Order Details' : 'تفاصيل الطلب'}</div>
                 <div class="waiter-items">${itemsHtml}</div>
