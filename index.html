@@ -1090,24 +1090,22 @@
             50% { transform: scale(1.2); opacity: 1; }
         }
 
-        /* الدائرة البيضاء/الكريمي اللي ورا اللوجو */
+        /* إطار اللوجو بدون قطعة بيضاء خلفه */
         .splash-logo-wrap::after {
             content: '';
             position: absolute;
-            inset: 0;
+            inset: 8px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #FAF6F0, #F5EEE5);
-            box-shadow: 
-                0 20px 60px rgba(200, 155, 94, 0.5),
-                0 8px 24px rgba(0, 0, 0, 0.3),
-                inset 0 -4px 12px rgba(200, 155, 94, 0.15);
+            border: 1px solid rgba(224, 190, 133, 0.22);
+            background: radial-gradient(circle, rgba(200,155,94,0.10), transparent 68%);
+            box-shadow: 0 0 45px rgba(200,155,94,0.18);
             z-index: 1;
         }
 
         /* اللوجو نفسه */
         .splash-logo-wrap img {
-            width: 85%;
-            height: 85%;
+            width: 92%;
+            height: 92%;
             object-fit: contain;
             object-position: center;
             position: relative;
@@ -1596,7 +1594,7 @@
             'Bakery': { ar: 'مخبوزات', en: 'Bakery' }
         };
 
-        let currentLang = localStorage.getItem('gharbaoui_lang') || 'ar';
+        let currentLang = localStorage.getItem('gharbaoui_lang') || 'en';
         let favorites = JSON.parse(localStorage.getItem('gharbaoui_favorites')) || [];
         let cart = JSON.parse(localStorage.getItem('gharbaoui_cart')) || [];
         let showOnlyFavorites = false;
@@ -2420,45 +2418,59 @@
             const currency = currentLang === 'en' ? 'EGP' : 'جنيه';
             const totalPrice = item.price * currentSheetQty;
 
-            const notesHtml = `
-                <div style="margin-bottom: 20px;">
-                    <div class="section-title">📝 ${currentLang === 'en' ? 'Notes' : 'ملاحظات'}</div>
-                    <textarea id="sheetNotes" class="notes-input" rows="3" 
-                              placeholder="${currentLang === 'en' ? 'e.g. No sugar, extra hot, less ice...' : 'مثال: بدون سكر، سخن زيادة، ثلج قليل...'}"></textarea>
-                </div>
-            `;
-
-            const qtyHtml = `
-                <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px;">
-                    <button class="qty-btn" onclick="changeSheetQty(-1)">−</button>
-                    <span style="font-size: 20px; font-weight: 900; min-width: 40px; text-align: center;">${currentSheetQty}</span>
-                    <button class="qty-btn" onclick="changeSheetQty(1)">+</button>
-                </div>
-            `;
-
             $('itemSheetContent').innerHTML = `
-                <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-subtle);">
-                    <img src="${item.image}" style="width: 100%; height: 100%; object-fit: cover;">
-                    <button onclick="closeItemSheet()" class="icon-btn" style="position: absolute; top: 12px; inset-inline-end: 12px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);">✕</button>
-                    <button onclick="toggleFavorite(${item.id}); renderItemSheet();" class="icon-btn" style="position: absolute; top: 12px; inset-inline-start: 12px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); font-size: 18px;">${isFav ? '❤️' : '🤍'}</button>
-                    ${!inStock ? `<div style="position: absolute; bottom: 12px; inset-inline-start: 12px; background: var(--accent-danger); color: #fff; font-size: 11px; font-weight: 900; padding: 6px 12px; border-radius: 8px;">${currentLang === 'en' ? 'Out of Stock' : 'غير متوفر'}</div>` : ''}
+                <div style="position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--bg-subtle);">
+                    <img src="${item.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
+                    <button onclick="closeItemSheet()" class="icon-btn" style="position:absolute;top:12px;inset-inline-end:12px;background:rgba(255,255,255,.95);">✕</button>
+                    <button onclick="toggleFavorite(${item.id}); renderItemSheet();" class="icon-btn" style="position:absolute;top:12px;inset-inline-start:12px;background:rgba(255,255,255,.95);font-size:18px;">${isFav ? '❤️' : '🤍'}</button>
                 </div>
-                <div style="padding: 20px;">
+                <div style="padding:20px;">
                     <span class="cat-chip">${catReadable}</span>
-                    <h2 style="font-size: 22px; font-weight: 900; color: var(--text-primary); margin: 8px 0 6px;">${itemName}</h2>
-                    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">${itemDesc}</p>
-                    ${inStock ? notesHtml + qtyHtml : ''}
-                </div>
-            `;
+                    <h2 style="font-size:22px;font-weight:900;margin:8px 0 6px;">${itemName}</h2>
+                    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:18px;">${itemDesc || ''}</p>
+                    ${inStock ? `
+                    <div style="margin-bottom:16px;">
+                        <div class="section-title">📝 ${currentLang === 'en' ? 'Notes' : 'ملاحظات'}</div>
+                        <textarea id="sheetNotes" class="notes-input" rows="3" placeholder="${currentLang === 'en' ? 'e.g. No sugar, extra hot, less ice...' : 'مثال: بدون سكر، سخن زيادة، ثلج قليل...'}"></textarea>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px;">
+                        <button class="qty-btn" onclick="changeSheetQty(-1)">−</button>
+                        <span style="font-size:20px;font-weight:900;min-width:40px;text-align:center;">${currentSheetQty}</span>
+                        <button class="qty-btn" onclick="changeSheetQty(1)">+</button>
+                    </div>` : `<div style="color:var(--accent-danger);font-weight:900;">${currentLang === 'en' ? 'Out of Stock' : 'غير متوفر'}</div>`}
+                </div>`;
 
-            if (!$('itemSheet').querySelector('.sheet-footer')) {
-                const footer = document.createElement('div');
+            let footer = $('itemSheet').querySelector('.sheet-footer');
+            if (!footer) {
+                footer = document.createElement('div');
                 footer.className = 'sheet-footer';
                 $('itemSheet').appendChild(footer);
             }
-            const footer = $('itemSheet').querySelector('.sheet-footer');
+            footer.style.display = inStock ? 'flex' : 'none';
             if (inStock) {
-                footer.style.display = 'flex';
                 footer.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:12px;font-weight:800;color:var(--text-secondary);">${currentLang === 'en' ? 'Total' : 'الإجمالي'}</span>
+                        <span style="font-size:22px;font-weight:900;color:var(--coffee-gold);">${totalPrice} ${currency}</span>
+                    </div>
+                    <button onclick="addCurrentSheetToCart()" class="primary-btn" style="width:100%;">
+                        🛒 ${currentLang === 'en' ? 'Add to Order' : 'إضافة للطلب'}
+                    </button>`;
+            }
+        }
+
+        function changeSheetQty(delta) {
+            currentSheetQty = Math.max(1, Math.min(99, currentSheetQty + delta));
+            renderItemSheet();
+        }
+
+        function addCurrentSheetToCart() {
+            if (!currentSheetItem || currentSheetItem.inStock === false) return;
+            const notes = ($('sheetNotes')?.value || '').trim();
+            addToCart(currentSheetItem, notes, currentSheetQty);
+            closeItemSheet();
+        }
+
+        </script>
+</body>
+</html>
