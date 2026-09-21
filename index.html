@@ -1848,10 +1848,21 @@
         }
 
         function toggleWelcomeLanguage() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const langBtn = $('welcomeLangBtn');
+            // Set the requested language directly instead of toggling blindly.
+            // This makes one tap on EN switch to English immediately.
+            const targetLang = langBtn && langBtn.innerText.trim().toUpperCase() === 'EN' ? 'en' : 'ar';
+            currentLang = targetLang;
             localStorage.setItem('gharbaoui_lang', currentLang);
+
+            // Update the welcome page immediately.
             updateWelcomeLanguage();
+
+            // Update the full menu immediately as well.
             applyLanguageUI();
+            renderCustomerMenu();
+            if (featuredItems.length > 0) showSlide(currentSlide);
+            if ($('cartSheet') && $('cartSheet').classList.contains('open')) renderCartModalItems();
         }
 
         function enterWelcome() {
