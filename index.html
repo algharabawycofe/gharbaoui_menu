@@ -1900,7 +1900,7 @@
                     try {
                         $('editImagePreview').src = await readImageFile(file);
                     } catch (err) {
-                        showToast(currentLang === 'en' ? 'Could not preview image' : 'مش قادر أعرض الصورة', '⚠️');
+                        showToast(currentLang === 'en' ? 'Could not preview image' : '', '⚠️');
                     }
                 });
             }
@@ -2610,8 +2610,6 @@
             const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
             
             // ═══════ OFFER LABELS ═══════
-            const featuredLabel = currentLang === 'en' ? '🔥 Special Offer' : '🔥 عرض خاص';
-            const discountLabel = currentLang === 'en' ? '20% OFF' : 'خصم 20%';
             const detailsLabel = currentLang === 'en' ? 'View' : 'التفاصيل';
             const currency = currentLang === 'en' ? 'EGP' : 'جنيه';
             
