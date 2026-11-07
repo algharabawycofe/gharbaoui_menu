@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="theme-color" content="#2B1D14">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title id="pageTitle">Al-Gharbawy - Menu</title>
+    <title id="pageTitle">Al-Gharbawy - Digital Menu</title>
     <link rel="manifest" id="pwaManifest">
     <link rel="apple-touch-icon" href="logo-01.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -977,7 +977,8 @@
                     image: item.image,
                     unitPrice: item.price,
                     notes: notes || '',
-                    quantity: qty
+                    quantity: qty,
+                    isOffer: item.isOffer || false
                 });
             }
             saveCart();
@@ -1092,8 +1093,12 @@
             let total = 0;
             container.innerHTML = cart.map(item => {
                 const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                const isOffer = item.isOffer || false;
                 const itemTotal = item.unitPrice * item.quantity;
-                total += itemTotal;
+                
+                if (!isOffer) {
+                    total += itemTotal;
+                }
 
                 return `
                     <div style="display: flex; gap: 12px; padding: 12px; background: var(--bg-subtle); border-radius: 16px; border: 1px solid var(--border);">
@@ -1102,7 +1107,7 @@
                             <div style="font-size: 13px; font-weight: 800; color: var(--text-primary); margin-bottom: 2px;">${itemName}</div>
                             ${item.notes ? `<div style="font-size: 10px; color: var(--text-muted); font-style: italic; margin-top: 2px;">📝 ${item.notes}</div>` : ''}
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-                                <span style="font-size: 12px; font-weight: 900; color: var(--coffee-gold);">${itemTotal} ${currency}</span>
+                                ${!isOffer ? `<span style="font-size: 12px; font-weight: 900; color: var(--coffee-gold);">${itemTotal} ${currency}</span>` : `<span></span>`}
                                 <div style="display: flex; align-items: center; gap: 6px;">
                                     <button onclick="updateCartQuantity('${item.cartKey}', -1, event)" class="qty-btn" style="width: 28px; height: 28px; font-size: 14px; border-radius: 8px;">−</button>
                                     <span style="font-size: 13px; font-weight: 900; min-width: 20px; text-align: center; color: var(--text-primary);">${item.quantity}</span>
@@ -1115,12 +1120,14 @@
             }).join('');
 
             footer.innerHTML = `
+                ${total > 0 ? `
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 12px; font-weight: 800; color: var(--text-secondary);">
                         ${currentLang === 'en' ? 'Total:' : 'الإجمالي:'}
                     </span>
                     <span style="font-size: 22px; font-weight: 900; color: var(--coffee-gold);">${total} ${currency}</span>
                 </div>
+                ` : ''}
                 <div style="display: flex; gap: 8px;">
                     <button onclick="clearCart()" class="secondary-btn" style="flex: 1;">
                         🗑️ <span>${currentLang === 'en' ? 'Clear' : 'مسح'}</span>
@@ -1146,8 +1153,12 @@
             let total = 0;
             const itemsHtml = cart.map(item => {
                 const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                const isOffer = item.isOffer || false;
                 const itemTotal = item.unitPrice * item.quantity;
-                total += itemTotal;
+                
+                if (!isOffer) {
+                    total += itemTotal;
+                }
 
                 return `
                     <div class="waiter-item">
@@ -1157,7 +1168,7 @@
                         </div>
                         <div class="waiter-item-qty-box">
                             <div class="waiter-item-qty">× ${item.quantity}</div>
-                            <div class="waiter-item-price">${itemTotal} ${currency}</div>
+                            ${!isOffer ? `<div class="waiter-item-price">${itemTotal} ${currency}</div>` : ''}
                         </div>
                     </div>
                 `;
@@ -1172,6 +1183,7 @@
                 </div>
                 <div class="waiter-order-title">📋 ${currentLang === 'en' ? 'Order Details' : 'تفاصيل الطلب'}</div>
                 <div class="waiter-items">${itemsHtml}</div>
+                ${total > 0 ? `
                 <div class="waiter-total-box">
                     <span class="waiter-total-label">${currentLang === 'en' ? 'Total' : 'الإجمالي'}</span>
                     <div style="display: flex; align-items: baseline;">
@@ -1179,6 +1191,7 @@
                         <span class="waiter-total-currency">${currency}</span>
                     </div>
                 </div>
+                ` : ''}
                 <div class="waiter-footer">
                     <div class="waiter-time">⏰ ${timeStr}</div>
                     <div class="waiter-date">${dateStr}</div>
@@ -1460,7 +1473,6 @@
             if (!currentSheetOffer) return;
             const offer = currentSheetOffer;
 
-            // هنا بقينا نستخدم صورة العرض نفسها (offer.image)
             $('itemSheetContent').innerHTML = `
                 <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-subtle);">
                     <img src="${offer.image}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none';">
@@ -1512,16 +1524,16 @@
             if (!currentSheetOffer) return;
             const offer = currentSheetOffer;
 
-            // بنضيف العرض للسلة كمنتج مستقل بصورته وسعره
             const offerItem = {
                 id: 'offer_' + offer.id,
                 nameAr: offer.titleAr || 'عرض',
                 nameEn: offer.titleEn || 'Offer',
-                image: offer.image, // نفس صورة العرض
+                image: offer.image,
                 price: offer.newPrice || 0,
                 category: 'Offers',
                 descAr: '',
-                descEn: ''
+                descEn: '',
+                isOffer: true // عشان نعرف إن ده عرض ومفيش سعر يظهر
             };
 
             addToCart(offerItem, '', currentSheetQty);
